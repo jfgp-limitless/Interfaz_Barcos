@@ -1,0 +1,107 @@
+{
+  "proyecto": {
+    "titulo": "Detección de barcos en imágenes satelitales",
+    "curso": "Proyecto 2 · Inteligencia Artificial",
+    "estudiante": "Juan Felipe Gonzalez Pardo",
+    "codigo": "7004086",
+    "programa": "Ingeniería Mecatrónica",
+    "universidad": "Universidad Militar Nueva Granada",
+    "periodo": "2026-2",
+    "meta_accuracy": 0.98
+  },
+  "dataset": {
+    "nombre": "Ships in Satellite Imagery (Kaggle)",
+    "url": "https://www.kaggle.com/datasets/rhammell/ships-in-satellite-imagery",
+    "formato": "Imágenes RGB de 80 × 80 px (recortes de escenas satelitales Planet, bahía de San Francisco)",
+    "original": {"Barcos": 1000, "No_Barcos": 3000},
+    "balanceo": "1:1 por conjunto. Se recortó No_Barcos al azar (semilla 42) hasta igualar Barcos.",
+    "metodo_split": "Separación por escena satelital: ninguna escena aparece en dos conjuntos (379 escenas), para evitar fuga de datos entre recortes vecinos.",
+    "split": {
+      "train": {"Barcos": 753, "No_Barcos": 753},
+      "val": {"Barcos": 150, "No_Barcos": 150},
+      "test": {"Barcos": 100, "No_Barcos": 100}
+    },
+    "porcentajes": {"train": 75, "val": 15, "test": 10},
+    "nota_train": "Train incluye 3 imágenes extra por clase añadidas manualmente (750 + 3)."
+  },
+  "modelos": [
+    {
+      "id": "resnet50",
+      "nombre": "ResNet50",
+      "nombre_largo": "ResNet50 con transfer learning",
+      "tipo": "Transfer learning (pesos ImageNet) + fine-tuning",
+      "archivo": "modelo_barcos_resnet50.keras",
+      "notebook": "Entrenamiento_Barcos_ResNet50.ipynb",
+      "umbral": 0.5,
+      "descripcion": "Red residual de 50 capas preentrenada en ImageNet. Se reutilizan sus filtros como extractor de características y se reentrenan sus últimas 30 capas para adaptarlas a imágenes satelitales; encima va un clasificador denso propio.",
+      "preprocesamiento": [
+        "Lectura con OpenCV y conversión BGR a RGB.",
+        "Validación de tamaño 80 × 80 px; padding centrado y redimensionado solo si la imagen no cumple.",
+        "Entrada al modelo en float32 con rango 0–255 (sin normalizar).",
+        "Dentro del modelo: aumento de datos (solo en entrenamiento), escalado a 160 × 160 px y resta de la media de ImageNet."
+      ],
+      "hiperparametros": [
+        ["Entrada", "80 × 80 × 3 (RGB, 0–255)"],
+        ["Resolución interna", "160 × 160 px (capa Resizing)"],
+        ["Normalización", "Resta de media ImageNet [123.68, 116.78, 103.94]"],
+        ["Pesos iniciales", "ImageNet"],
+        ["Capas reentrenadas", "Últimas 30 de ResNet50 (BatchNorm congelada)"],
+        ["Aumento de datos", "Flip horizontal y vertical, rotación ±90°"],
+        ["Cabeza", "GlobalAveragePooling → BatchNorm → Dense 128 ReLU → Dropout 0.5 → Dense 1 sigmoide"],
+        ["Optimizador", "Adam, learning rate 5e-5"],
+        ["Pérdida", "Binary cross-entropy"],
+        ["Batch size", "32"],
+        ["Épocas máximas", "35"],
+        ["Early stopping", "val_loss, paciencia 7, restaura mejores pesos"],
+        ["Reducción de LR", "ReduceLROnPlateau ×0.5, paciencia 3, mínimo 1e-7"],
+        ["Pesos de clase", "{0: 1.0, 1: 1.0}"],
+        ["Umbral de decisión", "0.5"],
+        ["Semilla", "42"]
+      ],
+      "decisiones": [
+        "Primera versión: base totalmente congelada y entrada dividida entre 255. Con un split aleatorio dio 95 % en test y 98.1 % en train: estaba subajustado.",
+        "Corregir la normalización a la de ImageNet, descongelar las últimas capas, añadir aumento de datos y subir la resolución interna a 160 px llevó el test a 98.5 %."
+      ]
+    },
+    {
+      "id": "cnn",
+      "nombre": "CNN desde cero",
+      "nombre_largo": "Red convolucional propia entrenada desde cero",
+      "tipo": "CNN secuencial, pesos aleatorios iniciales",
+      "archivo": "modelo_barcos_cnn.keras",
+      "notebook": "Entrenamiento_Barcos_CNN_desde_cero.ipynb",
+      "umbral": 0.5,
+      "descripcion": "Red convolucional diseñada para el problema: cuatro bloques de doble convolución 3 × 3 con BatchNorm y MaxPooling que reducen la imagen de 80 a 5 px mientras aumentan los filtros de 32 a 256; termina en un clasificador denso.",
+      "preprocesamiento": [
+        "Lectura con OpenCV y conversión BGR a RGB.",
+        "Validación de tamaño 80 × 80 px; padding centrado y redimensionado solo si la imagen no cumple.",
+        "Entrada al modelo en float32 con rango 0–255 (sin normalizar).",
+        "Dentro del modelo: aumento de datos (solo en entrenamiento) y escalado a 0–1 (Rescaling 1/255)."
+      ],
+      "hiperparametros": [
+        ["Entrada", "80 × 80 × 3 (RGB, 0–255)"],
+        ["Normalización", "Rescaling 1/255"],
+        ["Pesos iniciales", "Aleatorios (desde cero)"],
+        ["Bloques convolucionales", "4 bloques: 2 × [Conv 3×3 → BatchNorm → ReLU] → MaxPool 2×2"],
+        ["Filtros por bloque", "32 → 64 → 128 → 256"],
+        ["Padding", "same"],
+        ["Aumento de datos", "Flip horizontal y vertical, rotación ±90°, zoom 10 %, contraste 15 %"],
+        ["Cabeza", "Dropout 0.5 → GlobalAveragePooling → Dense 250 ReLU → Dense 1 sigmoide"],
+        ["Optimizador", "Adam, learning rate 1e-3"],
+        ["Pérdida", "Binary cross-entropy"],
+        ["Batch size", "32"],
+        ["Épocas máximas", "100"],
+        ["Early stopping", "val_loss, paciencia 12, restaura mejores pesos"],
+        ["Reducción de LR", "ReduceLROnPlateau ×0.5, paciencia 4, mínimo 1e-6"],
+        ["Pesos de clase", "{0: 1.0, 1: 1.0}"],
+        ["Umbral de decisión", "0.5"],
+        ["Semilla", "42"]
+      ],
+      "decisiones": [
+        "Basada en la red de referencia 07.2, adaptada a RGB 80 × 80 en lugar de gris 224 × 224.",
+        "Doble convolución por bloque con BatchNorm para entrenar estable; padding same para no perder resolución en 4 bloques.",
+        "Aumento de datos con flips y rotación amplia porque una imagen aérea no tiene orientación fija."
+      ]
+    }
+  ]
+}

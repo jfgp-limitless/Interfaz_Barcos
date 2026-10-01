@@ -1,0 +1,1655 @@
+{
+ "id": "resnet50",
+ "generado": "2026-10-01 11:00",
+ "tensorflow_generacion": "2.21.0",
+ "tamano_mb": 96.1,
+ "arquitectura": {
+  "capas": [
+   {
+    "nombre": "random_flip",
+    "tipo": "RandomFlip",
+    "salida": [
+     null,
+     80,
+     80,
+     3
+    ],
+    "parametros": 0,
+    "entrenables": 0
+   },
+   {
+    "nombre": "random_rotation",
+    "tipo": "RandomRotation",
+    "salida": [
+     null,
+     80,
+     80,
+     3
+    ],
+    "parametros": 0,
+    "entrenables": 0
+   },
+   {
+    "nombre": "resizing",
+    "tipo": "Resizing",
+    "salida": [
+     null,
+     160,
+     160,
+     3
+    ],
+    "parametros": 0,
+    "entrenables": 0
+   },
+   {
+    "nombre": "normalization",
+    "tipo": "Normalization",
+    "salida": [
+     null,
+     160,
+     160,
+     3
+    ],
+    "parametros": 0,
+    "entrenables": 0
+   },
+   {
+    "nombre": "resnet50",
+    "tipo": "Functional",
+    "salida": [
+     null,
+     5,
+     5,
+     2048
+    ],
+    "parametros": 23587712,
+    "entrenables": 14428672
+   },
+   {
+    "nombre": "global_average_pooling2d",
+    "tipo": "GlobalAveragePooling2D",
+    "salida": [
+     null,
+     2048
+    ],
+    "parametros": 0,
+    "entrenables": 0
+   },
+   {
+    "nombre": "batch_normalization",
+    "tipo": "BatchNormalization",
+    "salida": [
+     null,
+     2048
+    ],
+    "parametros": 8192,
+    "entrenables": 4096
+   },
+   {
+    "nombre": "dense",
+    "tipo": "Dense",
+    "salida": [
+     null,
+     128
+    ],
+    "parametros": 262272,
+    "entrenables": 262272
+   },
+   {
+    "nombre": "dropout",
+    "tipo": "Dropout",
+    "salida": [
+     null,
+     128
+    ],
+    "parametros": 0,
+    "entrenables": 0
+   },
+   {
+    "nombre": "dense_1",
+    "tipo": "Dense",
+    "salida": [
+     null,
+     1
+    ],
+    "parametros": 129,
+    "entrenables": 129
+   }
+  ],
+  "total": 23858305,
+  "entrenables": 14695169,
+  "no_entrenables": 9163136,
+  "subred": {
+   "nombre": "resnet50",
+   "capas_totales": 175,
+   "etapas": [
+    {
+     "nombre": "input",
+     "bloques": 0,
+     "capas": 1,
+     "parametros": 0,
+     "entrenables": 0,
+     "salida": [
+      null,
+      160,
+      160,
+      3
+     ],
+     "conv": 0
+    },
+    {
+     "nombre": "conv1",
+     "bloques": 0,
+     "capas": 4,
+     "parametros": 9728,
+     "entrenables": 0,
+     "salida": [
+      null,
+      80,
+      80,
+      64
+     ],
+     "conv": 1
+    },
+    {
+     "nombre": "pool1",
+     "bloques": 0,
+     "capas": 2,
+     "parametros": 0,
+     "entrenables": 0,
+     "salida": [
+      null,
+      40,
+      40,
+      64
+     ],
+     "conv": 0
+    },
+    {
+     "nombre": "conv2",
+     "bloques": 3,
+     "capas": 32,
+     "parametros": 220032,
+     "entrenables": 0,
+     "salida": [
+      null,
+      40,
+      40,
+      256
+     ],
+     "conv": 10
+    },
+    {
+     "nombre": "conv3",
+     "bloques": 4,
+     "capas": 42,
+     "parametros": 1230336,
+     "entrenables": 0,
+     "salida": [
+      null,
+      20,
+      20,
+      512
+     ],
+     "conv": 13
+    },
+    {
+     "nombre": "conv4",
+     "bloques": 6,
+     "capas": 62,
+     "parametros": 7129088,
+     "entrenables": 0,
+     "salida": [
+      null,
+      10,
+      10,
+      1024
+     ],
+     "conv": 19
+    },
+    {
+     "nombre": "conv5",
+     "bloques": 3,
+     "capas": 32,
+     "parametros": 14998528,
+     "entrenables": 14428672,
+     "salida": [
+      null,
+      5,
+      5,
+      2048
+     ],
+     "conv": 10
+    }
+   ],
+   "primera_capa_entrenable": "conv5_block1_2_conv",
+   "capas_con_pesos_entrenables": 9
+  }
+ },
+ "conjuntos": {
+  "train": {
+   "n": 1506,
+   "positivos": 753,
+   "negativos": 753,
+   "accuracy": 0.99933598937583,
+   "precision": 0.9986737400530504,
+   "recall": 1.0,
+   "especificidad": 0.99867197875166,
+   "f1": 0.9993364299933643,
+   "loss": 0.0025371189764727756,
+   "auc": 0.999996472719128,
+   "cm": {
+    "tn": 752,
+    "fp": 1,
+    "fn": 0,
+    "tp": 753
+   },
+   "ms_por_imagen": 24.955838907702528
+  },
+  "val": {
+   "n": 300,
+   "positivos": 150,
+   "negativos": 150,
+   "accuracy": 0.9866666666666667,
+   "precision": 0.9802631578947368,
+   "recall": 0.9933333333333333,
+   "especificidad": 0.98,
+   "f1": 0.9867549668874172,
+   "loss": 0.029124297456661268,
+   "auc": 0.9996,
+   "cm": {
+    "tn": 147,
+    "fp": 3,
+    "fn": 1,
+    "tp": 149
+   },
+   "ms_por_imagen": 24.495608813333167
+  },
+  "test": {
+   "n": 200,
+   "positivos": 100,
+   "negativos": 100,
+   "accuracy": 0.985,
+   "precision": 0.98989898989899,
+   "recall": 0.98,
+   "especificidad": 0.99,
+   "f1": 0.9849246231155778,
+   "loss": 0.04733266514609873,
+   "auc": 0.9989,
+   "cm": {
+    "tn": 99,
+    "fp": 1,
+    "fn": 2,
+    "tp": 98
+   },
+   "ms_por_imagen": 24.3606495399996,
+   "roc": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.0,
+     0.01
+    ],
+    [
+     0.0,
+     0.05
+    ],
+    [
+     0.0,
+     0.07
+    ],
+    [
+     0.0,
+     0.09
+    ],
+    [
+     0.0,
+     0.1
+    ],
+    [
+     0.0,
+     0.12
+    ],
+    [
+     0.0,
+     0.14
+    ],
+    [
+     0.0,
+     0.15
+    ],
+    [
+     0.0,
+     0.17
+    ],
+    [
+     0.0,
+     0.18
+    ],
+    [
+     0.0,
+     0.19
+    ],
+    [
+     0.0,
+     0.2
+    ],
+    [
+     0.0,
+     0.21
+    ],
+    [
+     0.0,
+     0.22
+    ],
+    [
+     0.0,
+     0.23
+    ],
+    [
+     0.0,
+     0.25
+    ],
+    [
+     0.0,
+     0.26
+    ],
+    [
+     0.0,
+     0.28
+    ],
+    [
+     0.0,
+     0.29
+    ],
+    [
+     0.0,
+     0.3
+    ],
+    [
+     0.0,
+     0.31
+    ],
+    [
+     0.0,
+     0.32
+    ],
+    [
+     0.0,
+     0.33
+    ],
+    [
+     0.0,
+     0.34
+    ],
+    [
+     0.0,
+     0.36
+    ],
+    [
+     0.0,
+     0.37
+    ],
+    [
+     0.0,
+     0.38
+    ],
+    [
+     0.0,
+     0.39
+    ],
+    [
+     0.0,
+     0.4
+    ],
+    [
+     0.0,
+     0.41
+    ],
+    [
+     0.0,
+     0.42
+    ],
+    [
+     0.0,
+     0.43
+    ],
+    [
+     0.0,
+     0.44
+    ],
+    [
+     0.0,
+     0.45
+    ],
+    [
+     0.0,
+     0.46
+    ],
+    [
+     0.0,
+     0.47
+    ],
+    [
+     0.0,
+     0.48
+    ],
+    [
+     0.0,
+     0.49
+    ],
+    [
+     0.0,
+     0.5
+    ],
+    [
+     0.0,
+     0.51
+    ],
+    [
+     0.0,
+     0.52
+    ],
+    [
+     0.0,
+     0.53
+    ],
+    [
+     0.0,
+     0.54
+    ],
+    [
+     0.0,
+     0.55
+    ],
+    [
+     0.0,
+     0.56
+    ],
+    [
+     0.0,
+     0.57
+    ],
+    [
+     0.0,
+     0.58
+    ],
+    [
+     0.0,
+     0.59
+    ],
+    [
+     0.0,
+     0.6
+    ],
+    [
+     0.0,
+     0.61
+    ],
+    [
+     0.0,
+     0.62
+    ],
+    [
+     0.0,
+     0.63
+    ],
+    [
+     0.0,
+     0.64
+    ],
+    [
+     0.0,
+     0.65
+    ],
+    [
+     0.0,
+     0.66
+    ],
+    [
+     0.0,
+     0.67
+    ],
+    [
+     0.0,
+     0.68
+    ],
+    [
+     0.0,
+     0.69
+    ],
+    [
+     0.0,
+     0.7
+    ],
+    [
+     0.0,
+     0.71
+    ],
+    [
+     0.0,
+     0.72
+    ],
+    [
+     0.0,
+     0.73
+    ],
+    [
+     0.0,
+     0.74
+    ],
+    [
+     0.0,
+     0.75
+    ],
+    [
+     0.0,
+     0.76
+    ],
+    [
+     0.0,
+     0.77
+    ],
+    [
+     0.0,
+     0.78
+    ],
+    [
+     0.0,
+     0.79
+    ],
+    [
+     0.0,
+     0.8
+    ],
+    [
+     0.0,
+     0.81
+    ],
+    [
+     0.0,
+     0.82
+    ],
+    [
+     0.0,
+     0.83
+    ],
+    [
+     0.0,
+     0.84
+    ],
+    [
+     0.0,
+     0.85
+    ],
+    [
+     0.0,
+     0.86
+    ],
+    [
+     0.0,
+     0.87
+    ],
+    [
+     0.0,
+     0.88
+    ],
+    [
+     0.0,
+     0.89
+    ],
+    [
+     0.01,
+     0.89
+    ],
+    [
+     0.01,
+     0.9
+    ],
+    [
+     0.01,
+     0.91
+    ],
+    [
+     0.01,
+     0.92
+    ],
+    [
+     0.01,
+     0.93
+    ],
+    [
+     0.01,
+     0.94
+    ],
+    [
+     0.01,
+     0.95
+    ],
+    [
+     0.01,
+     0.96
+    ],
+    [
+     0.01,
+     0.97
+    ],
+    [
+     0.01,
+     0.98
+    ],
+    [
+     0.01,
+     0.99
+    ],
+    [
+     0.01,
+     1.0
+    ],
+    [
+     0.02,
+     1.0
+    ],
+    [
+     0.03,
+     1.0
+    ],
+    [
+     0.04,
+     1.0
+    ],
+    [
+     0.05,
+     1.0
+    ],
+    [
+     0.06,
+     1.0
+    ],
+    [
+     0.07,
+     1.0
+    ],
+    [
+     0.08,
+     1.0
+    ],
+    [
+     0.09,
+     1.0
+    ],
+    [
+     0.1,
+     1.0
+    ],
+    [
+     0.11,
+     1.0
+    ],
+    [
+     0.12,
+     1.0
+    ],
+    [
+     0.13,
+     1.0
+    ],
+    [
+     0.14,
+     1.0
+    ],
+    [
+     0.15,
+     1.0
+    ],
+    [
+     0.16,
+     1.0
+    ],
+    [
+     0.17,
+     1.0
+    ],
+    [
+     0.18,
+     1.0
+    ],
+    [
+     0.19,
+     1.0
+    ],
+    [
+     0.2,
+     1.0
+    ],
+    [
+     0.21,
+     1.0
+    ],
+    [
+     0.22,
+     1.0
+    ],
+    [
+     0.23,
+     1.0
+    ],
+    [
+     0.24,
+     1.0
+    ],
+    [
+     0.25,
+     1.0
+    ],
+    [
+     0.26,
+     1.0
+    ],
+    [
+     0.27,
+     1.0
+    ],
+    [
+     0.28,
+     1.0
+    ],
+    [
+     0.29,
+     1.0
+    ],
+    [
+     0.3,
+     1.0
+    ],
+    [
+     0.31,
+     1.0
+    ],
+    [
+     0.32,
+     1.0
+    ],
+    [
+     0.33,
+     1.0
+    ],
+    [
+     0.34,
+     1.0
+    ],
+    [
+     0.35,
+     1.0
+    ],
+    [
+     0.36,
+     1.0
+    ],
+    [
+     0.37,
+     1.0
+    ],
+    [
+     0.38,
+     1.0
+    ],
+    [
+     0.39,
+     1.0
+    ],
+    [
+     0.4,
+     1.0
+    ],
+    [
+     0.41,
+     1.0
+    ],
+    [
+     0.42,
+     1.0
+    ],
+    [
+     0.43,
+     1.0
+    ],
+    [
+     0.44,
+     1.0
+    ],
+    [
+     0.45,
+     1.0
+    ],
+    [
+     0.46,
+     1.0
+    ],
+    [
+     0.47,
+     1.0
+    ],
+    [
+     0.48,
+     1.0
+    ],
+    [
+     0.49,
+     1.0
+    ],
+    [
+     0.5,
+     1.0
+    ],
+    [
+     0.51,
+     1.0
+    ],
+    [
+     0.52,
+     1.0
+    ],
+    [
+     0.53,
+     1.0
+    ],
+    [
+     0.54,
+     1.0
+    ],
+    [
+     0.55,
+     1.0
+    ],
+    [
+     0.56,
+     1.0
+    ],
+    [
+     0.57,
+     1.0
+    ],
+    [
+     0.58,
+     1.0
+    ],
+    [
+     0.59,
+     1.0
+    ],
+    [
+     0.6,
+     1.0
+    ],
+    [
+     0.61,
+     1.0
+    ],
+    [
+     0.62,
+     1.0
+    ],
+    [
+     0.63,
+     1.0
+    ],
+    [
+     0.64,
+     1.0
+    ],
+    [
+     0.65,
+     1.0
+    ],
+    [
+     0.66,
+     1.0
+    ],
+    [
+     0.67,
+     1.0
+    ],
+    [
+     0.68,
+     1.0
+    ],
+    [
+     0.69,
+     1.0
+    ],
+    [
+     0.7,
+     1.0
+    ],
+    [
+     0.71,
+     1.0
+    ],
+    [
+     0.72,
+     1.0
+    ],
+    [
+     0.73,
+     1.0
+    ],
+    [
+     0.74,
+     1.0
+    ],
+    [
+     0.75,
+     1.0
+    ],
+    [
+     0.76,
+     1.0
+    ],
+    [
+     0.77,
+     1.0
+    ],
+    [
+     0.78,
+     1.0
+    ],
+    [
+     0.79,
+     1.0
+    ],
+    [
+     0.8,
+     1.0
+    ],
+    [
+     0.81,
+     1.0
+    ],
+    [
+     0.82,
+     1.0
+    ],
+    [
+     0.83,
+     1.0
+    ],
+    [
+     0.84,
+     1.0
+    ],
+    [
+     0.85,
+     1.0
+    ],
+    [
+     0.86,
+     1.0
+    ],
+    [
+     0.87,
+     1.0
+    ],
+    [
+     0.88,
+     1.0
+    ],
+    [
+     0.89,
+     1.0
+    ],
+    [
+     0.9,
+     1.0
+    ],
+    [
+     0.91,
+     1.0
+    ],
+    [
+     0.92,
+     1.0
+    ],
+    [
+     0.93,
+     1.0
+    ],
+    [
+     0.94,
+     1.0
+    ],
+    [
+     0.95,
+     1.0
+    ],
+    [
+     0.96,
+     1.0
+    ],
+    [
+     0.97,
+     1.0
+    ],
+    [
+     0.98,
+     1.0
+    ],
+    [
+     0.99,
+     1.0
+    ],
+    [
+     1.0,
+     1.0
+    ]
+   ],
+   "histograma": {
+    "bordes": [
+     0.0,
+     0.05,
+     0.1,
+     0.15,
+     0.2,
+     0.25,
+     0.3,
+     0.35,
+     0.4,
+     0.45,
+     0.5,
+     0.55,
+     0.6,
+     0.65,
+     0.7,
+     0.75,
+     0.8,
+     0.85,
+     0.9,
+     0.95,
+     1.0
+    ],
+    "barcos": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     97
+    ],
+    "no_barcos": [
+     98,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1
+    ]
+   },
+   "errores": [
+    {
+     "archivo": "Barcos/1__20170101_180916_0e30__-122.33843910450398_37.766867283515275.png",
+     "real": 1,
+     "prob": 0.4893
+    },
+    {
+     "archivo": "Barcos/1__20170921_181406_1031__-122.3379965684267_37.76683775898489.png",
+     "real": 1,
+     "prob": 0.2329
+    },
+    {
+     "archivo": "No_Barcos/0__20170515_180654_1007__-122.33248210458426_37.73233142990515.png",
+     "real": 0,
+     "prob": 0.9989
+    }
+   ]
+  }
+ },
+ "externa": {
+  "n": 40,
+  "positivos": 24,
+  "negativos": 16,
+  "accuracy": 0.975,
+  "precision": 1.0,
+  "recall": 0.9583333333333334,
+  "especificidad": 1.0,
+  "f1": 0.9787234042553191,
+  "loss": 0.03235850013722201,
+  "auc": 1.0,
+  "cm": {
+   "tn": 16,
+   "fp": 0,
+   "fn": 1,
+   "tp": 23
+  },
+  "roc": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    0.0,
+    0.04167
+   ],
+   [
+    0.0,
+    0.08333
+   ],
+   [
+    0.0,
+    0.125
+   ],
+   [
+    0.0,
+    0.16667
+   ],
+   [
+    0.0,
+    0.20833
+   ],
+   [
+    0.0,
+    0.25
+   ],
+   [
+    0.0,
+    0.29167
+   ],
+   [
+    0.0,
+    0.33333
+   ],
+   [
+    0.0,
+    0.375
+   ],
+   [
+    0.0,
+    0.41667
+   ],
+   [
+    0.0,
+    0.45833
+   ],
+   [
+    0.0,
+    0.5
+   ],
+   [
+    0.0,
+    0.54167
+   ],
+   [
+    0.0,
+    0.58333
+   ],
+   [
+    0.0,
+    0.625
+   ],
+   [
+    0.0,
+    0.66667
+   ],
+   [
+    0.0,
+    0.70833
+   ],
+   [
+    0.0,
+    0.75
+   ],
+   [
+    0.0,
+    0.79167
+   ],
+   [
+    0.0,
+    0.83333
+   ],
+   [
+    0.0,
+    0.875
+   ],
+   [
+    0.0,
+    0.91667
+   ],
+   [
+    0.0,
+    0.95833
+   ],
+   [
+    0.0,
+    1.0
+   ],
+   [
+    0.0625,
+    1.0
+   ],
+   [
+    0.125,
+    1.0
+   ],
+   [
+    0.1875,
+    1.0
+   ],
+   [
+    0.25,
+    1.0
+   ],
+   [
+    0.3125,
+    1.0
+   ],
+   [
+    0.375,
+    1.0
+   ],
+   [
+    0.4375,
+    1.0
+   ],
+   [
+    0.5,
+    1.0
+   ],
+   [
+    0.5625,
+    1.0
+   ],
+   [
+    0.625,
+    1.0
+   ],
+   [
+    0.6875,
+    1.0
+   ],
+   [
+    0.75,
+    1.0
+   ],
+   [
+    0.8125,
+    1.0
+   ],
+   [
+    0.875,
+    1.0
+   ],
+   [
+    0.9375,
+    1.0
+   ],
+   [
+    1.0,
+    1.0
+   ]
+  ],
+  "errores": [
+   {
+    "archivo": "barco/img10.png",
+    "real": 1,
+    "prob": 0.3021
+   }
+  ],
+  "carpeta": "DataSetv2"
+ },
+ "notebook": [
+  {
+   "titulo": "LIBRERÍAS",
+   "codigo": "# ===============================\n# LIBRERÍAS\n# ===============================\n\nimport os\nimport time\nimport json\nimport cv2\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nfrom tqdm import tqdm\nfrom google.colab import drive, files\n\nimport tensorflow as tf\nfrom tensorflow.keras.callbacks import TensorBoard, EarlyStopping, ReduceLROnPlateau\nfrom tensorflow.keras.applications import ResNet50\nfrom tensorflow.keras.optimizers import Adam\nfrom tensorflow.keras import layers\n\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.metrics import confusion_matrix, f1_score, accuracy_score\nfrom sklearn.metrics import precision_score, recall_score, classification_report\nfrom sklearn.metrics import roc_curve, auc\n\nSEED = 42\ntf.keras.utils.set_random_seed(SEED)\n\nprint(\"TensorFlow:\", tf.__version__)\nprint(\"Keras     :\", tf.keras.__version__)\nprint(\"GPU       :\", tf.config.list_physical_devices(\"GPU\"))\nif not tf.config.list_physical_devices(\"GPU\"):\n    print(\"\\n⚠ NO hay GPU activa. Ve a: Entorno de ejecución → Cambiar tipo de entorno → T4 GPU, y reinicia.\")",
+   "texto": "TensorFlow: 2.20.0\nKeras     : 3.13.2\nGPU       : [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]",
+   "figuras": []
+  },
+  {
+   "titulo": "MONTAJE DE GOOGLE DRIVE",
+   "codigo": "# ===============================\n# MONTAJE DE GOOGLE DRIVE\n# ===============================\ndrive.mount('/content/drive')",
+   "texto": "Mounted at /content/drive",
+   "figuras": []
+  },
+  {
+   "titulo": "RUTA DEL DATASET (carpetas ya separadas en train / val / test)",
+   "codigo": "# ===============================\n# RUTA DEL DATASET (carpetas ya separadas en train / val / test)\n# ===============================\n# Estructura esperada en Drive:\n#   DataSet_Split/\n#     train/  Barcos/  No_Barcos/\n#     val/    Barcos/  No_Barcos/\n#     test/   Barcos/  No_Barcos/\n\nRUTA_DATASET = \"/content/drive/MyDrive/DataSet_Split\"\nCLASES = [\"No_Barcos\", \"Barcos\"]          # índice 0 = No barco | índice 1 = Barco\nSPLITS = [\"train\", \"val\", \"test\"]\nEXT_VALIDAS = (\".png\", \".jpg\", \".jpeg\")\n\nprint(f\"{'Conjunto':<8} | {'Barcos':<7} | {'No_Barcos':<9}\")\nfor s in SPLITS:\n    nb = len([f for f in os.listdir(os.path.join(RUTA_DATASET, s, \"Barcos\")) if f.lower().endswith(EXT_VALIDAS)])\n    nn = len([f for f in os.listdir(os.path.join(RUTA_DATASET, s, \"No_Barcos\")) if f.lower().endswith(EXT_VALIDAS)])\n    print(f\"{s:<8} | {nb:<7} | {nn:<9}\")",
+   "texto": "Conjunto | Barcos  | No_Barcos\ntrain    | 753     | 753      \nval      | 150     | 150      \ntest     | 100     | 100      ",
+   "figuras": []
+  },
+  {
+   "titulo": "CREACIÓN DE ARRAYS X, y (UNO POR CONJUNTO)",
+   "codigo": "# ===============================\n# CREACIÓN DE ARRAYS X, y (UNO POR CONJUNTO)\n# ===============================\n# Leer imágenes desde Drive es lento. Con USAR_CACHE = True, la primera vez se guarda un .npz\n# en Drive y las siguientes se carga en segundos.\n# (Si cambias las carpetas, borra el cache o pon USAR_CACHE = False.)\n\nUSAR_CACHE = True\nRUTA_CACHE = os.path.join(RUTA_DATASET, \"cache_split.npz\")\n\ndef cargar_split(nombre):\n    X_, y_ = [], []\n    ajustadas, corruptas = 0, 0\n    for clase in CLASES:\n        etiqueta = 1 if clase == \"Barcos\" else 0\n        ruta_clase = os.path.join(RUTA_DATASET, nombre, clase)\n        for archivo in tqdm(sorted(os.listdir(ruta_clase)), desc=f\"{nombre}/{clase}\"):\n            if not archivo.lower().endswith(EXT_VALIDAS):\n                continue\n            img, ajustada = cargar_imagen(os.path.join(ruta_clase, archivo))\n            if img is None:\n                corruptas += 1\n                continue\n            ajustadas += int(ajustada)\n            X_.append(img); y_.append(etiqueta)\n    print(f\"  {nombre}: ajustadas a 80x80 = {ajustadas} | corruptas omitidas = {corruptas}\")\n    # float32 rango 0-255: el escalado/normalización está DENTRO del modelo\n    return np.array(X_, dtype=\"float32\"), np.array(y_)\n\nif USAR_CACHE and os.path.exists(RUTA_CACHE):\n    d = np.load(RUTA_CACHE)\n    X_train, y_train, X_val, y_val, X_test, y_test = (d[k] for k in [\"X_train\", \"y_train\", \"X_val\", \"y_val\", \"X_test\", \"y_test\"])\n    print(\"Cargado desde cache:\", RUTA_CACHE)\nelse:\n    X_train, y_train = cargar_split(\"train\")\n    X_val,   y_val   = cargar_split(\"val\")\n    X_test,  y_test  = cargar_split(\"test\")\n    if USAR_CACHE:\n        np.savez_compressed(RUTA_CACHE, X_train=X_train, y_train=y_train, X_val=X_val, y_val=y_val, X_test=X_test, y_test=y_test)\n        print(\"Cache guardado en:\", RUTA_CACHE)\n\n# Mezclar train (las carpetas se leen primero No_Barcos y luego Barcos)\norden = np.random.default_rng(SEED).permutation(len(X_train))\nX_train, y_train = X_train[orden], y_train[orden]\n\n# Vista rápida de ejemplos\nfig, axes = plt.subplots(2, 6, figsize=(12, 4.5))\nfor fila, etiqueta in enumerate([1, 0]):\n    idxs = np.random.choice(np.where(y_train == etiqueta)[0], 6, replace=False)\n    for ax, i in zip(axes[fila], idxs):\n        ax.imshow(X_train[i].astype(\"uint8\")); ax.axis(\"off\")\n        ax.set_title(\"Barco\" if etiqueta == 1 else \"No barco\", fontsize=9)\nplt.tight_layout(); plt.show()",
+   "texto": "train/No_Barcos: 100%|██████████| 753/753 [00:09<00:00, 81.19it/s] \ntrain/Barcos: 100%|██████████| 753/753 [00:11<00:00, 66.03it/s] \n  train: ajustadas a 80x80 = 0 | corruptas omitidas = 0\nval/No_Barcos: 100%|██████████| 150/150 [00:02<00:00, 52.29it/s]\nval/Barcos: 100%|██████████| 150/150 [00:03<00:00, 41.73it/s]\n  val: ajustadas a 80x80 = 0 | corruptas omitidas = 0\ntest/No_Barcos: 100%|██████████| 100/100 [00:01<00:00, 52.18it/s]\ntest/Barcos: 100%|██████████| 100/100 [00:02<00:00, 49.36it/s]\n  test: ajustadas a 80x80 = 0 | corruptas omitidas = 0\nCache guardado en: /content/drive/MyDrive/DataSet_Split/cache_split.npz",
+   "figuras": [
+    "/info/figuras/resnet50/figura_01.png"
+   ]
+  },
+  {
+   "titulo": "TRAIN, VALIDATION Y TEST (ya vienen separados en carpetas: 75% / 15% / 10%)",
+   "codigo": "# ======================================\n# TRAIN, VALIDATION Y TEST (ya vienen separados en carpetas: 75% / 15% / 10%)\n# =======================================\n\nprint(\"Train:\", X_train.shape, \"| Validation:\", X_val.shape, \"| Test:\", X_test.shape)\nfor nombre, yy in [(\"Train\", y_train), (\"Validation\", y_val), (\"Test\", y_test)]:\n    print(f\"{nombre:<11}: Barcos={int(yy.sum())} | No barcos={int((yy == 0).sum())}\")",
+   "texto": "Train: (1506, 80, 80, 3) | Validation: (300, 80, 80, 3) | Test: (200, 80, 80, 3)\nTrain      : Barcos=753 | No barcos=753\nValidation : Barcos=150 | No barcos=150\nTest       : Barcos=100 | No barcos=100",
+   "figuras": []
+  },
+  {
+   "titulo": "MODELO – TRANSFER LEARNING",
+   "codigo": "# ======================================\n# MODELO – TRANSFER LEARNING\n# ======================================\n# Cambios sutiles respecto a la referencia:\n#  1) Normalización propia de ResNet50 (resta de media ImageNet) dentro del modelo.\n#  2) Augmentation (flips + rotación) dentro del modelo: solo actúa al entrenar.\n#  3) Se descongelan las últimas 30 capas de ResNet50 (la BatchNorm sigue congelada) para\n#     que las características se adapten a imágenes satelitales.\n#  4) TAMANO_RESNET: tamaño con el que ResNet50 \"ve\" la imagen (la entrada sigue siendo 80x80).\n#     Poner 80 para trabajar al tamaño original; 160 o 224 suele ayudar con objetos pequeños.\n\nTAMANO_RESNET = 160\n\nbase_model = ResNet50(\n    include_top=False,\n    weights=\"imagenet\",\n    input_shape=(TAMANO_RESNET, TAMANO_RESNET, 3)\n)\n\nbase_model.trainable = True\nfor capa in base_model.layers[:-30]:\n    capa.trainable = False\nfor capa in base_model.layers:\n    if isinstance(capa, tf.keras.layers.BatchNormalization):\n        capa.trainable = False\n\nmodeloCNN = tf.keras.Sequential([\n    tf.keras.layers.Input(shape=(80, 80, 3)),\n\n    # augmentation (imágenes aéreas: no hay \"arriba\" fijo)\n    tf.keras.layers.RandomFlip(\"horizontal_and_vertical\"),\n    tf.keras.layers.RandomRotation(0.25),\n\n    # escalado interno + normalización ResNet50 (media ImageNet, entrada 0-255)\n    tf.keras.layers.Resizing(TAMANO_RESNET, TAMANO_RESNET),\n    tf.keras.layers.Normalization(mean=[123.68, 116.779, 103.939], variance=[1.0, 1.0, 1.0]),\n\n    base_model,\n\n    tf.keras.layers.GlobalAveragePooling2D(),\n    tf.keras.layers.BatchNormalization(),\n\n    tf.keras.layers.Dense(128, activation=\"relu\"),\n    tf.keras.layers.Dropout(0.5),\n\n    tf.keras.layers.Dense(1, activation=\"sigmoid\")\n])\n\nmodeloCNN.compile(\n    optimizer=Adam(learning_rate=5e-5),\n    loss=\"binary_crossentropy\",\n    metrics=[\"accuracy\", \"precision\", \"recall\"]\n)\n\nmodeloCNN.summary()",
+   "texto": "Downloading data from https://storage.googleapis.com/tensorflow/keras-applications/resnet/resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5\n94765736/94765736 ━━━━━━━━━━━━━━━━━━━━ 0s 0us/step\nModel: \"sequential\"\n┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓\n┃ Layer (type)                    ┃ Output Shape           ┃       Param # ┃\n┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩\n│ random_flip (RandomFlip)        │ (None, 80, 80, 3)      │             0 │\n├─────────────────────────────────┼────────────────────────┼───────────────┤\n│ random_rotation                 │ (None, 80, 80, 3)      │             0 │\n│ (RandomRotation)                │                        │               │\n├─────────────────────────────────┼────────────────────────┼───────────────┤\n│ resizing (Resizing)             │ (None, 160, 160, 3)    │             0 │\n├─────────────────────────────────┼────────────────────────┼───────────────┤\n│ normalization (Normalization)   │ (None, 160, 160, 3)    │             0 │\n├─────────────────────────────────┼────────────────────────┼───────────────┤\n│ resnet50 (Functional)           │ (None, 5, 5, 2048)     │    23,587,712 │\n├─────────────────────────────────┼────────────────────────┼───────────────┤\n│ global_average_pooling2d        │ (None, 2048)           │             0 │\n│ (GlobalAveragePooling2D)        │                        │               │\n├─────────────────────────────────┼────────────────────────┼───────────────┤\n│ batch_normalization             │ (None, 2048)           │         8,192 │\n│ (BatchNormalization)            │                        │               │\n├─────────────────────────────────┼────────────────────────┼───────────────┤\n│ dense (Dense)                   │ (None, 128)            │       262,272 │\n├─────────────────────────────────┼────────────────────────┼───────────────┤\n│ dropout (Dropout)               │ (None, 128)            │             0 │\n├─────────────────────────────────┼────────────────────────┼───────────────┤\n│ dense_1 (Dense)                 │ (None, 1)              │           129 │\n└─────────────────────────────────┴────────────────────────┴───────────────┘\n Total params: 23,858,305 (91.01 MB)\n Trainable params: 14,695,169 (56.06 MB)\n Non-trainable params: 9,163,136 (34.95 MB)",
+   "figuras": []
+  },
+  {
+   "titulo": "ENTRENAMIENTO",
+   "codigo": "#===============================\n#ENTRENAMIENTO\n#===============================\n\nclass_weight = {0:1.0, 1:1.0}  # pesos iguales para ambas clases\n\nhistorial = modeloCNN.fit(\n    X_train, y_train,\n    epochs=35,\n    batch_size=32,\n    validation_data=(X_val, y_val),\n    callbacks=[tensorboardCNN, early_stop, reduce_lr],\n    class_weight=class_weight\n)\n\ngraficar_historial([historial], \"ResNet50\")",
+   "texto": "Epoch 1/35\n48/48 ━━━━━━━━━━━━━━━━━━━━ 24s 189ms/step - accuracy: 0.8858 - loss: 0.2634 - precision: 0.8858 - recall: 0.8858 - val_accuracy: 0.9733 - val_loss: 0.1062 - val_precision: 0.9494 - val_recall: 1.0000 - learning_rate: 5.0000e-05\nEpoch 2/35\n48/48 ━━━━━━━━━━━━━━━━━━━━ 5s 114ms/step - accuracy: 0.9781 - loss: 0.0659 - precision: 0.9700 - recall: 0.9867 - val_accuracy: 0.9800 - val_loss: 0.0704 - val_precision: 0.9615 - val_recall: 1.0000 - learning_rate: 5.0000e-05\nEpoch 3/35\n48/48 ━━━━━━━━━━━━━━━━━━━━ 6s 115ms/step - accuracy: 0.9907 - loss: 0.0247 - precision: 0.9881 - recall: 0.9934 - val_accuracy: 0.9867 - val_loss: 0.0685 - val_precision: 0.9740 - val_recall: 1.0000 - learning_rate: 5.0000e-05\nEpoch 4/35\n48/48 ━━━━━━━━━━━━━━━━━━━━ 5s 112ms/step - accuracy: 0.9927 - loss: 0.0219 - precision: 0.9894 - recall: 0.9960 - val_accuracy: 0.9833 - val_loss: 0.0578 - val_precision: 0.9801 - val_recall: 0.9867 - learning_rate: 5.0000e-05\nEpoch 5/35\n48/48 ━━━━━━━━━━━━━━━━━━━━ 6s 115ms/step - accuracy: 0.9954 - loss: 0.0235 - precision: 0.9947 - recall: 0.9960 - val_accuracy: 0.9833 - val_loss: 0.1081 - val_precision: 0.9677 - val_recall: 1.0000 - learning_rate: 5.0000e-05\nEpoch 6/35\n48/48 ━━━━━━━━━━━━━━━━━━━━ 5s 113ms/step - accuracy: 0.9920 - loss: 0.0249 - precision: 0.9907 - recall: 0.9934 - val_accuracy: 0.9900 - val_loss: 0.0409 - val_precision: 0.9804 - val_recall: 1.0000 - learning_rate: 5.0000e-05\nEpoch 7/35\n48/48 ━━━━━━━━━━━━━━━━━━━━ 5s 110ms/step - accuracy: 0.9934 - loss: 0.0174 - precision: 0.9947 - recall: 0.9920 - val_accuracy: 0.9900 - val_loss: 0.0411 - val_precision: 0.9868 - val_recall: 0.9933 - learning_rate: 5.0000e-05\nEpoch 8/35\n48/48 ━━━━━━━━━━━━━━━━━━━━ 6s 115ms/step - accuracy: 0.9967 - loss: 0.0136 - precision: 0.9960 - recall: 0.9973 - val_accuracy: 0.9733 - val_loss: 0.1139 - val_precision: 0.9494 - val_recall: 1.0000 - learning_rate: 5.0000e-05\nEpoch 9/35\n48/48 ━━━━━━━━━━━━━━━━━━━━ 5s 114ms/step - accuracy: 0.9973 - loss: 0.0108 - precision: 0.9947 - recall: 1.0000 - val_accuracy: 0.9867 - val_loss: 0.0322 - val_precision: 0.9867 - val_recall: 0.9867 - learning_rate: 5.0000e-05\nEpoch 10/35\n48/48 ━━━━━━━━━━━━━━━━━━━━ 6s 115ms/step - accuracy: 1.0000 - loss: 0.0029 - precision: 1.0000 - recall: 1.0000 - val_accuracy: 0.9867 - val_loss: 0.0322 - val_precision: 0.9803 - val_recall: 0.9933 - learning_rate: 5.0000e-05\nEpoch 11/35\n48/48 ━━━━━━━━━━━━━━━━━━━━ 10s 112ms/step - accuracy: 0.9967 - loss: 0.0096 - precision: 0.9960 - recall: 0.9973 - val_accuracy: 0.9767 - val_loss: 0.1118 - val_precision: 0.9735 - val_recall: 0.9800 - learning_rate: 5.0000e-05\nEpoch 12/35\n47/48 ━━━━━━━━━━━━━━━━━━━━ 0s 102ms/step - accuracy: 0.9977 - loss: 0.0131 - precision: 0.9989 - recall: 0.9964\nEpoch 12: ReduceLROnPlateau reducing learning rate to 2.499999936844688e-05.\n48/48 ━━━━━━━━━━━━━━━━━━━━ 6s 116ms/step - accuracy: 0.9973 - loss: 0.0119 - precision: 0.9987 - recall: 0.9960 - val_accuracy: 0.9600 - val_loss: 0.1982 - val_precision: 0.9259 - val_recall: 1.0000 - learning_rate: 5.0000e-05\nEpoch 13/35\n48/48 ━━━━━━━━━━━━━━━━━━━━ 6s 116ms/step - accuracy: 0.9960 - loss: 0.0096 - precision: 0.9934 - recall: 0.9987 - val_accuracy: 0.9867 - val_loss: 0.0291 - val_precision: 0.9803 - val_recall: 0.9933 - learning_rate: 2.5000e-05\nEpoch 14/35\n48/48 ━━━━━━━━━━━━━━━━━━━━ 6s 116ms/step - accuracy: 1.0000 - loss: 0.0019 - precision: 1.0000 - recall: 1.0000 - val_accuracy: 0.9867 - val_loss: 0.0348 - val_precision: 0.9740 - val_recall: 1.0000 - learning_rate: 2.5000e-05\nEpoch 15/35\n48/48 ━━━━━━━━━━━━━━━━━━━━ 10s 114ms/step - accuracy: 1.0000 - loss: 0.0015 - precision: 1.0000 - recall: 1.0000 - val_accuracy: 0.9867 - val_loss: 0.0298 - val_precision: 0.9740 - val_recall: 1.0000 - learning_rate: 2.5000e-05\nEpoch 16/35\n47/48 ━━━━━━━━━━━━━━━━━━━━ 0s 104ms/step - accuracy: 0.9997 - loss: 0.0017 - precision: 0.9995 - recall: 1.0000\nEpoch 16: ReduceLROnPlateau reducing learning rate to 1.249999968422344e-05.\n48/48 ━━━━━━━━━━━━━━━━━━━━ 6s 119ms/step - accuracy: 0.9993 - loss: 0.0021 - precision: 0.9987 - recall: 1.0000 - val_accuracy: 0.9833 - val_loss: 0.0304 - val_precision: 0.9739 - val_recall: 0.9933 - learning_rate: 2.5000e-05\nEpoch 17/35\n48/48 ━━━━━━━━━━━━━━━━━━━━ 6s 115ms/step - accuracy: 0.9993 - loss: 0.0021 - precision: 0.9987 - recall: 1.0000 - val_accuracy: 0.9867 - val_loss: 0.0495 - val_precision: 0.9740 - val_recall: 1.0000 - learning_rate: 1.2500e-05\nEpoch 18/35\n48/48 ━━━━━━━━━━━━━━━━━━━━ 6s 117ms/step - accuracy: 1.0000 - loss: 8.5193e-04 - precision: 1.0000 - recall: 1.0000 - val_accuracy: 0.9867 - val_loss: 0.0458 - val_precision: 0.9740 - val_recall: 1.0000 - learning_rate: 1.2500e-05\nEpoch 19/35\n47/48 ━━━━━━━━━━━━━━━━━━━━ 0s 104ms/step - accuracy: 0.9994 - loss: 0.0014 - precision: 0.9993 - recall: 0.9994\nEpoch 19: ReduceLROnPlateau reducing learning rate to 6.24999984211172e-06.\n48/48 ━━━━━━━━━━━━━━━━━━━━ 6s 118ms/step - accuracy: 0.9987 - loss: 0.0025 - precision: 0.9987 - recall: 0.9987 - val_accuracy: 0.9833 - val_loss: 0.0657 - val_precision: 0.9677 - val_recall: 1.0000 - learning_rate: 1.2500e-05\nEpoch 20/35\n48/48 ━━━━━━━━━━━━━━━━━━━━ 6s 116ms/step - accuracy: 0.9993 - loss: 0.0011 - precision: 1.0000 - recall: 0.9987 - val_accuracy: 0.9833 - val_loss: 0.0674 - val_precision: 0.9677 - val_recall: 1.0000 - learning_rate: 6.2500e-06",
+   "figuras": [
+    "/info/figuras/resnet50/figura_02.png"
+   ]
+  },
+  {
+   "titulo": "TRAIN, VALIDATION Y TEST (ya vienen separados en carpetas: 75% / 15% / 10%)",
+   "codigo": "# ======================================\n# TRAIN, VALIDATION Y TEST (ya vienen separados en carpetas: 75% / 15% / 10%)\n# =======================================\n\nprint(\"Train:\", X_train.shape, \"| Validation:\", X_val.shape, \"| Test:\", X_test.shape)\nfor nombre, yy in [(\"Train\", y_train), (\"Validation\", y_val), (\"Test\", y_test)]:\n    print(f\"{nombre:<11}: Barcos={int(yy.sum())} | No barcos={int((yy == 0).sum())}\")",
+   "texto": "Train: (1506, 80, 80, 3) | Validation: (300, 80, 80, 3) | Test: (200, 80, 80, 3)\nTrain      : Barcos=753 | No barcos=753\nValidation : Barcos=150 | No barcos=150\nTest       : Barcos=100 | No barcos=100",
+   "figuras": []
+  },
+  {
+   "titulo": "EVALUACIÓN COMPLETA - TRAIN, VALIDATION Y TEST",
+   "codigo": "# ===============================\n# EVALUACIÓN COMPLETA - TRAIN, VALIDATION Y TEST\n# ===============================\n\nUMBRAL = 0.5   # umbral de decisión\n\ndef evaluar_conjunto(modelo, X_, y_, umbral=UMBRAL):\n    prob = modelo.predict(X_, verbose=0).ravel()\n    pred = (prob > umbral).astype(int)\n    return {\n        \"acc\":  accuracy_score(y_, pred),\n        \"prec\": precision_score(y_, pred, zero_division=0),\n        \"rec\":  recall_score(y_, pred, zero_division=0),\n        \"f1\":   f1_score(y_, pred, zero_division=0),\n        \"cm\":   confusion_matrix(y_, pred, labels=[0, 1]),\n        \"prob\": prob,\n    }\n\nprint(\"\\n\" + \"=\"*80)\nprint(\"EVALUANDO MODELO EN LOS 3 CONJUNTOS\")\nprint(\"=\"*80)\n\nloss_train, *_ = modeloCNN.evaluate(X_train, y_train, verbose=0)\nloss_val,   *_ = modeloCNN.evaluate(X_val,   y_val,   verbose=0)\nloss_test,  *_ = modeloCNN.evaluate(X_test,  y_test,  verbose=0)\n\nr_train = evaluar_conjunto(modeloCNN, X_train, y_train)\nr_val   = evaluar_conjunto(modeloCNN, X_val,   y_val)\nr_test  = evaluar_conjunto(modeloCNN, X_test,  y_test)\n\n# -------- MATRICES DE CONFUSIÓN --------\nprint(\"\\nMATRICES DE CONFUSIÓN:\")\nprint(\"-\" * 80)\nfor nombre, r in [(\"TRAIN\", r_train), (\"VALIDATION\", r_val), (\"TEST\", r_test)]:\n    cm = r[\"cm\"]\n    print(f\"{nombre}:\")\n    print(cm)\n    print(f\"  TN={cm[0,0]} | FP={cm[0,1]}\")\n    print(f\"  FN={cm[1,0]} | TP={cm[1,1]}\\n\")\n\n# -------- RESUMEN DE MÉTRICAS --------\nprint(\"=\"*80)\nprint(\"RESUMEN DE MÉTRICAS\")\nprint(\"=\"*80)\nprint(f\"{'Conjunto':<12} | {'Loss':<8} | {'Accuracy':<8} | {'Precision':<9} | {'Recall':<8} | {'F1-score':<8}\")\nprint(\"-\" * 80)\nfor nombre, loss, r in [(\"TRAIN\", loss_train, r_train), (\"VALIDATION\", loss_val, r_val), (\"TEST\", loss_test, r_test)]:\n    print(f\"{nombre:<12} | {loss:<8.4f} | {r['acc']:<8.4f} | {r['prec']:<9.4f} | {r['rec']:<8.4f} | {r['f1']:<8.4f}\")\nprint(\"=\"*80)\n\nprint(\"\\nREPORTE DE CLASIFICACIÓN (TEST):\")\nprint(classification_report(y_test, (r_test[\"prob\"] > UMBRAL).astype(int),\n                            target_names=[\"No barco\", \"Barco\"], digits=4))\n\n# -------- ANÁLISIS DE GENERALIZACIÓN --------\nprint(\"=\"*80)\nprint(\"ANÁLISIS DE GENERALIZACIÓN\")\nprint(\"=\"*80)\n\ndiff_train_val  = abs(r_train[\"acc\"] - r_val[\"acc\"])\ndiff_val_test   = abs(r_val[\"acc\"] - r_test[\"acc\"])\ndiff_train_test = abs(r_train[\"acc\"] - r_test[\"acc\"])\n\nprint(f\"Diferencia Train-Validation:  {diff_train_val:.4f} ({diff_train_val*100:.2f}%)\")\nprint(f\"Diferencia Validation-Test:   {diff_val_test:.4f} ({diff_val_test*100:.2f}%)\")\nprint(f\"Diferencia Train-Test:        {diff_train_test:.4f} ({diff_train_test*100:.2f}%)\")\n\nif diff_val_test < 0.03:\n    print(\"\\n EXCELENTE: Validation y Test muy similares (< 3% diferencia)\")\n    print(\"   → El modelo generaliza correctamente\")\nelif diff_val_test < 0.05:\n    print(\"\\n BUENO: Validation y Test razonablemente similares (< 5% diferencia)\")\n    print(\"   → El modelo generaliza bien\")\nelse:\n    print(\"\\n ADVERTENCIA: Diferencia significativa entre Validation y Test (> 5%)\")\n    print(\"   → Posible overfitting o validation set no representativo\")\n\n# -------- ANÁLISIS DE ERRORES --------\ncm_test = r_test[\"cm\"]\nprint(\"\\n\" + \"=\"*80)\nprint(\"ANÁLISIS DE ERRORES EN TEST\")\nprint(\"=\"*80)\nprint(f\"Falsos negativos (barcos NO detectados): {cm_test[1,0]}/{int(np.sum(y_test == 1))}\")\nprint(f\"Falsos positivos (agua/tierra marcada como barco): {cm_test[0,1]}/{int(np.sum(y_test == 0))}\")\n\n# -------- META DEL ENUNCIADO (> 98% accuracy en test) --------\nacc_pct = r_test[\"acc\"] * 100\nprint(\"\\n\" + \"=\"*80)\nprint(f\"ACCURACY TEST: {acc_pct:.2f}%  (meta del enunciado: > 98%)\")\nif acc_pct >= 98:\n    print(\" META CUMPLIDA\")\nelse:\n    print(f\" Por debajo de la meta. Penalización estimada: -{((98 - acc_pct) / 2) * 0.5:.2f} puntos (0.5 por cada 2% bajo 98%)\")\nprint(\"=\"*80)",
+   "texto": "================================================================================\nEVALUANDO MODELO EN LOS 3 CONJUNTOS\n================================================================================\n\nMATRICES DE CONFUSIÓN:\n--------------------------------------------------------------------------------\nTRAIN:\n[[752   1]\n [  0 753]]\n  TN=752 | FP=1\n  FN=0 | TP=753\n\nVALIDATION:\n[[147   3]\n [  1 149]]\n  TN=147 | FP=3\n  FN=1 | TP=149\n\nTEST:\n[[99  1]\n [ 2 98]]\n  TN=99 | FP=1\n  FN=2 | TP=98\n\n================================================================================\nRESUMEN DE MÉTRICAS\n================================================================================\nConjunto     | Loss     | Accuracy | Precision | Recall   | F1-score\n--------------------------------------------------------------------------------\nTRAIN        | 0.0025   | 0.9993   | 0.9987    | 1.0000   | 0.9993  \nVALIDATION   | 0.0291   | 0.9867   | 0.9803    | 0.9933   | 0.9868  \nTEST         | 0.0473   | 0.9850   | 0.9899    | 0.9800   | 0.9849  \n================================================================================\n\nREPORTE DE CLASIFICACIÓN (TEST):\n              precision    recall  f1-score   support\n\n    No barco     0.9802    0.9900    0.9851       100\n       Barco     0.9899    0.9800    0.9849       100\n\n    accuracy                         0.9850       200\n   macro avg     0.9850    0.9850    0.9850       200\nweighted avg     0.9850    0.9850    0.9850       200\n\n================================================================================\nANÁLISIS DE GENERALIZACIÓN\n================================================================================\nDiferencia Train-Validation:  0.0127 (1.27%)\nDiferencia Validation-Test:   0.0017 (0.17%)\nDiferencia Train-Test:        0.0143 (1.43%)\n\n EXCELENTE: Validation y Test muy similares (< 3% diferencia)\n   → El modelo generaliza correctamente\n\n================================================================================\nANÁLISIS DE ERRORES EN TEST\n================================================================================\nFalsos negativos (barcos NO detectados): 2/100\nFalsos positivos (agua/tierra marcada como barco): 1/100\n\n================================================================================\nACCURACY TEST: 98.50%  (meta del enunciado: > 98%)\n META CUMPLIDA\n================================================================================",
+   "figuras": []
+  },
+  {
+   "titulo": "ROC Y AUC",
+   "codigo": "# ===============================\n# ROC Y AUC\n# ===============================\n\nprob_test = modeloCNN.predict(X_test, verbose=0).ravel()\n\nfpr, tpr, _ = roc_curve(y_test, prob_test)\nroc_auc = auc(fpr, tpr)\n\nprint(f\"AUC: {roc_auc:.4f}\")\n\nplt.figure(figsize=(6,6))\nplt.plot(fpr, tpr, label=f\"AUC = {roc_auc:.3f}\")\nplt.plot([0,1],[0,1],'--')\nplt.xlabel(\"Tasa de falsos positivos\"); plt.ylabel(\"Tasa de verdaderos positivos\")\nplt.legend()\nplt.grid()\nplt.show()",
+   "texto": "AUC: 0.9989",
+   "figuras": [
+    "/info/figuras/resnet50/figura_03.png"
+   ]
+  },
+  {
+   "titulo": "GUARDAR Y DESCARGAR EL MODELO (para la interfaz de usuario)",
+   "codigo": "# ===============================\n# GUARDAR Y DESCARGAR EL MODELO (para la interfaz de usuario)\n# ===============================\n\nif \"UMBRAL\" not in globals():\n    UMBRAL = 0.5\n\nCARPETA_SALIDA = \"/content/drive/MyDrive/DataSet_Split/modelo_barcos\"\nos.makedirs(CARPETA_SALIDA, exist_ok=True)\n\nruta_modelo = os.path.join(CARPETA_SALIDA, \"modelo_barcos_resnet50.keras\")\nmodeloCNN.save(ruta_modelo)\n\n# Accuracy en test calculado aquí mismo\nprob_test = modeloCNN.predict(X_test, verbose=0).ravel()\nacc_test = float(np.mean((prob_test > UMBRAL).astype(int) == y_test))\n\nconfig = {\n    \"tamano_entrada\": [80, 80, 3],\n    \"canales\": \"RGB\",\n    \"rango_entrada\": \"float32 0-255 sin normalizar (el modelo normaliza y reescala internamente)\",\n    \"umbral\": UMBRAL,\n    \"clases\": {\"0\": \"No_Barcos\", \"1\": \"Barcos\"},\n    \"salida\": \"probabilidad de barco (sigmoid)\",\n    \"tensorflow\": tf.__version__,\n    \"keras\": tf.keras.__version__,\n    \"accuracy_test\": acc_test,\n}\nwith open(os.path.join(CARPETA_SALIDA, \"config_modelo.json\"), \"w\") as f:\n    json.dump(config, f, indent=2, ensure_ascii=False)\n\n# Verificación: recargar y comprobar que predice igual\nmodelo_recargado = tf.keras.models.load_model(ruta_modelo)\ndiff = np.abs(modelo_recargado.predict(X_test[:50], verbose=0) - modeloCNN.predict(X_test[:50], verbose=0)).max()\nprint(f\"Modelo guardado en: {ruta_modelo}\")\nprint(f\"Accuracy en test: {acc_test:.4f}\")\nprint(f\"Diferencia máxima tras recargar: {diff:.2e}  (debe ser ~0)\")\n\n# Descarga directa al PC\nfiles.download(ruta_modelo)\nfiles.download(os.path.join(CARPETA_SALIDA, \"config_modelo.json\"))",
+   "texto": "Modelo guardado en: /content/drive/MyDrive/DataSet_Split/modelo_barcos/modelo_barcos_resnet50.keras\nAccuracy en test: 0.9850\nDiferencia máxima tras recargar: 0.00e+00  (debe ser ~0)",
+   "figuras": []
+  },
+  {
+   "titulo": "EVALUACIÓN CON IMÁGENES NUEVAS (desde Drive)",
+   "codigo": "# ===============================\n# EVALUACIÓN CON IMÁGENES NUEVAS (desde Drive)\n# ===============================\n# Evalúa el modelo con imágenes que NUNCA vio (ni en train, val ni test).\n# La carpeta puede tener:\n#   A) subcarpetas  Barcos/  y  No_Barcos/        (la etiqueta sale de la carpeta), o\n#   B) una carpeta plana con nombres tipo \"1__xxx.png\" (barco) y \"0__xxx.png\" (no barco).\n\nRUTA_PRUEBA = \"/content/drive/MyDrive/DataSetv2\"   # <-- CAMBIAR por tu carpeta\nUSAR_MODELO_GUARDADO = False                            # True = recarga el .keras guardado en Drive\n\nif USAR_MODELO_GUARDADO:\n    ruta_modelo = \"/content/drive/MyDrive/DataSet_Split/modelo_barcos/modelo_barcos_resnet50.keras\"\n    modelo_eval = tf.keras.models.load_model(ruta_modelo)\nelse:\n    modelo_eval = modeloCNN\n\n# ---- 1) Listar imágenes y etiquetas ----\nitems = []   # (ruta, etiqueta o None)\nif all(os.path.isdir(os.path.join(RUTA_PRUEBA, c)) for c in CLASES):\n    for clase in CLASES:\n        et = 1 if clase == \"Barcos\" else 0\n        for f in sorted(os.listdir(os.path.join(RUTA_PRUEBA, clase))):\n            if f.lower().endswith(EXT_VALIDAS):\n                items.append((os.path.join(RUTA_PRUEBA, clase, f), et))\nelse:\n    for f in sorted(os.listdir(RUTA_PRUEBA)):\n        if f.lower().endswith(EXT_VALIDAS):\n            et = 1 if f.startswith(\"1__\") else (0 if f.startswith(\"0__\") else None)\n            items.append((os.path.join(RUTA_PRUEBA, f), et))\n\n# ---- 2) Cargar con el MISMO preprocesamiento del entrenamiento ----\nX_new, y_new, nombres = [], [], []\nfor ruta, et in tqdm(items, desc=\"Cargando\"):\n    img, _ = cargar_imagen(ruta)\n    if img is None:\n        continue\n    X_new.append(img); y_new.append(-1 if et is None else et); nombres.append(os.path.basename(ruta))\n\nX_new = np.array(X_new, dtype=\"float32\")\ny_new = np.array(y_new)\ncon_etiqueta = bool(len(y_new)) and np.all(y_new >= 0)\nprint(f\"\\nImágenes cargadas: {len(X_new)} | con etiqueta: {con_etiqueta}\")\n\n# ---- 3) Predicción ----\nprob_new = modelo_eval.predict(X_new, verbose=0).ravel()\npred_new = (prob_new > UMBRAL).astype(int)\n\n# ---- 4) Indicadores ----\nif con_etiqueta:\n    acc  = accuracy_score(y_new, pred_new)\n    prec = precision_score(y_new, pred_new, zero_division=0)\n    rec  = recall_score(y_new, pred_new, zero_division=0)\n    f1   = f1_score(y_new, pred_new, zero_division=0)\n    cm   = confusion_matrix(y_new, pred_new, labels=[0, 1])\n\n    print(\"\\n\" + \"=\"*80)\n    print(\"EVALUACIÓN CON IMÁGENES NUEVAS\")\n    print(\"=\"*80)\n    print(f\"Imágenes: {len(y_new)} (barcos: {int(y_new.sum())} | no barcos: {int((y_new == 0).sum())})\")\n    print(f\"Accuracy : {acc:.4f} ({acc*100:.2f}%)\")\n    print(f\"Precision: {prec:.4f}\")\n    print(f\"Recall   : {rec:.4f}\")\n    print(f\"F1-score : {f1:.4f}\")\n    print(\"\\nMatriz de confusión:\")\n    print(cm)\n    print(f\"  TN={cm[0,0]} | FP={cm[0,1]}\")\n    print(f\"  FN={cm[1,0]} | TP={cm[1,1]}\")\n    print(\"\\n\" + classification_report(y_new, pred_new, labels=[0, 1],\n                                       target_names=[\"No barco\", \"Barco\"], digits=4, zero_division=0))\n\n    if len(np.unique(y_new)) == 2:\n        fpr_n, tpr_n, _ = roc_curve(y_new, prob_new)\n        print(f\"AUC: {auc(fpr_n, tpr_n):.4f}\")\n\n    acc_pct = acc * 100\n    print(f\"\\nMeta del enunciado: > 98% | Resultado: {acc_pct:.2f}%\")\n    if acc_pct >= 98:\n        print(\" META CUMPLIDA\")\n    else:\n        print(f\" Penalización estimada: -{((98 - acc_pct) / 2) * 0.5:.2f} puntos\")\n\n    # Matriz de confusión gráfica\n    fig, ax = plt.subplots(figsize=(4.5, 4))\n    ax.imshow(cm, cmap=\"Blues\")\n    ax.set_xticks([0, 1]); ax.set_xticklabels([\"No barco\", \"Barco\"])\n    ax.set_yticks([0, 1]); ax.set_yticklabels([\"No barco\", \"Barco\"])\n    ax.set_xlabel(\"Predicción\"); ax.set_ylabel(\"Real\"); ax.set_title(\"Matriz de confusión\")\n    for i in range(2):\n        for j in range(2):\n            ax.text(j, i, cm[i, j], ha=\"center\", va=\"center\", fontsize=14,\n                    color=\"white\" if cm[i, j] > cm.max()/2 else \"black\")\n    plt.tight_layout(); plt.show()\n\n    # Imágenes mal clasificadas\n    errores = np.where(pred_new != y_new)[0]\n    print(f\"\\nImágenes mal clasificadas: {len(errores)}\")\n    if len(errores):\n        mostrar = errores[:12]\n        fig, axes = plt.subplots(1, len(mostrar), figsize=(2.2*len(mostrar), 2.8), squeeze=False)\n        for ax, i in zip(axes[0], mostrar):\n            ax.imshow(X_new[i].astype(\"uint8\")); ax.axis(\"off\")\n            real = \"Barco\" if y_new[i] == 1 else \"No barco\"\n            ax.set_title(f\"Real: {real}\\nP(barco)={prob_new[i]:.2f}\", fontsize=8, color=\"#8B0000\")\n        plt.tight_layout(); plt.show()\n\n        print(\"\\nProbabilidades de las imágenes mal clasificadas:\")\n        for i in errores:\n            print(f\"  {nombres[i]} -> P(barco) = {prob_new[i]:.4f}\")\n\n    # Barrido de umbral (solo diagnóstico; no ajustes el umbral con pocas imágenes)\n    print(\"\\nBarrido de umbral:\")\n    for u in [0.5, 0.4, 0.3, 0.2, 0.1]:\n        p = (prob_new > u).astype(int)\n        print(f\"  umbral {u}: acc={accuracy_score(y_new, p):.4f} | \"\n              f\"FP={int(((p == 1) & (y_new == 0)).sum())} | FN={int(((p == 0) & (y_new == 1)).sum())}\")\nelse:\n    print(\"\\nLas imágenes no tienen etiqueta reconocible: se muestran solo las predicciones.\")\n\n# ---- 5) Tabla de predicciones (se guarda en Drive) ----\nimport pandas as pd\ntabla = pd.DataFrame({\n    \"archivo\": nombres,\n    \"prob_barco\": np.round(prob_new, 4),\n    \"prediccion\": np.where(pred_new == 1, \"Barco\", \"No barco\"),\n})\nif con_etiqueta:\n    tabla[\"real\"] = np.where(y_new == 1, \"Barco\", \"No barco\")\n    tabla[\"correcto\"] = tabla[\"prediccion\"] == tabla[\"real\"]\nif \"CARPETA_SALIDA\" not in globals():\n    CARPETA_SALIDA = \"/content/drive/MyDrive/DataSet/modelo_barcos\"\nos.makedirs(CARPETA_SALIDA, exist_ok=True)\nruta_csv = os.path.join(CARPETA_SALIDA, \"predicciones_imagenes_nuevas.csv\")\ntabla.to_csv(ruta_csv, index=False)\nprint(f\"\\nPredicciones guardadas en: {ruta_csv}\")\ntabla.head(20)",
+   "texto": "Cargando: 100%|██████████| 40/40 [00:13<00:00,  2.93it/s]\n\nImágenes cargadas: 40 | con etiqueta: True\n\n================================================================================\nEVALUACIÓN CON IMÁGENES NUEVAS\n================================================================================\nImágenes: 40 (barcos: 24 | no barcos: 16)\nAccuracy : 0.9750 (97.50%)\nPrecision: 1.0000\nRecall   : 0.9583\nF1-score : 0.9787\n\nMatriz de confusión:\n[[16  0]\n [ 1 23]]\n  TN=16 | FP=0\n  FN=1 | TP=23\n\n              precision    recall  f1-score   support\n\n    No barco     0.9412    1.0000    0.9697        16\n       Barco     1.0000    0.9583    0.9787        24\n\n    accuracy                         0.9750        40\n   macro avg     0.9706    0.9792    0.9742        40\nweighted avg     0.9765    0.9750    0.9751        40\n\nAUC: 1.0000\n\nMeta del enunciado: > 98% | Resultado: 97.50%\n Penalización estimada: -0.12 puntos\n\nImágenes mal clasificadas: 1\n\nProbabilidades de las imágenes mal clasificadas:\n  img10.png -> P(barco) = 0.3021\n\nBarrido de umbral:\n  umbral 0.5: acc=0.9750 | FP=0 | FN=1\n  umbral 0.4: acc=0.9750 | FP=0 | FN=1\n  umbral 0.3: acc=1.0000 | FP=0 | FN=0\n  umbral 0.2: acc=1.0000 | FP=0 | FN=0\n  umbral 0.1: acc=1.0000 | FP=0 | FN=0\n\nPredicciones guardadas en: /content/drive/MyDrive/DataSet_Split/modelo_barcos/predicciones_imagenes_nuevas.csv\n      archivo  prob_barco prediccion      real  correcto\n0   img11.png      0.0000   No barco  No barco      True\n1   img19.png      0.0559   No barco  No barco      True\n2    img2.png      0.0000   No barco  No barco      True\n3   img33.png      0.0000   No barco  No barco      True\n4   img34.png      0.0000   No barco  No barco      True\n5   img35.png      0.0000   No barco  No barco      True\n6   img36.png      0.0000   No barco  No barco      True\n7   img37.png      0.0000   No barco  No barco      True\n8   img38.png      0.0000   No barco  No barco      True\n9   img39.png      0.0000   No barco  No barco      True\n10   img4.png      0.0009   No barco  No barco      True\n11  img40.png      0.0000   No barco  No barco      True\n12  img41.png      0.0005   No barco  No barco      True\n13   img7.png      0.0000   No barco  No barco      True\n14   img8.png      0.0000   No barco  No barco      True\n15   img9.png      0.0000   No barco  No barco      True\n16   img1.png      0.9999      Barco     Barco      True\n17  img10.png      0.3021   No barco     Barco     False\n18  img12.png      0.9999      Barco     Barco      True\n19  img13.png      1.0000      Barco     Barco      True",
+   "figuras": [
+    "/info/figuras/resnet50/figura_04.png",
+    "/info/figuras/resnet50/figura_05.png"
+   ]
+  }
+ ],
+ "historial": [
+  {
+   "epoca": 1,
+   "accuracy": 0.8858,
+   "loss": 0.2634,
+   "precision": 0.8858,
+   "recall": 0.8858,
+   "val_accuracy": 0.9733,
+   "val_loss": 0.1062,
+   "val_precision": 0.9494,
+   "val_recall": 1.0,
+   "learning_rate": 5e-05
+  },
+  {
+   "epoca": 2,
+   "accuracy": 0.9781,
+   "loss": 0.0659,
+   "precision": 0.97,
+   "recall": 0.9867,
+   "val_accuracy": 0.98,
+   "val_loss": 0.0704,
+   "val_precision": 0.9615,
+   "val_recall": 1.0,
+   "learning_rate": 5e-05
+  },
+  {
+   "epoca": 3,
+   "accuracy": 0.9907,
+   "loss": 0.0247,
+   "precision": 0.9881,
+   "recall": 0.9934,
+   "val_accuracy": 0.9867,
+   "val_loss": 0.0685,
+   "val_precision": 0.974,
+   "val_recall": 1.0,
+   "learning_rate": 5e-05
+  },
+  {
+   "epoca": 4,
+   "accuracy": 0.9927,
+   "loss": 0.0219,
+   "precision": 0.9894,
+   "recall": 0.996,
+   "val_accuracy": 0.9833,
+   "val_loss": 0.0578,
+   "val_precision": 0.9801,
+   "val_recall": 0.9867,
+   "learning_rate": 5e-05
+  },
+  {
+   "epoca": 5,
+   "accuracy": 0.9954,
+   "loss": 0.0235,
+   "precision": 0.9947,
+   "recall": 0.996,
+   "val_accuracy": 0.9833,
+   "val_loss": 0.1081,
+   "val_precision": 0.9677,
+   "val_recall": 1.0,
+   "learning_rate": 5e-05
+  },
+  {
+   "epoca": 6,
+   "accuracy": 0.992,
+   "loss": 0.0249,
+   "precision": 0.9907,
+   "recall": 0.9934,
+   "val_accuracy": 0.99,
+   "val_loss": 0.0409,
+   "val_precision": 0.9804,
+   "val_recall": 1.0,
+   "learning_rate": 5e-05
+  },
+  {
+   "epoca": 7,
+   "accuracy": 0.9934,
+   "loss": 0.0174,
+   "precision": 0.9947,
+   "recall": 0.992,
+   "val_accuracy": 0.99,
+   "val_loss": 0.0411,
+   "val_precision": 0.9868,
+   "val_recall": 0.9933,
+   "learning_rate": 5e-05
+  },
+  {
+   "epoca": 8,
+   "accuracy": 0.9967,
+   "loss": 0.0136,
+   "precision": 0.996,
+   "recall": 0.9973,
+   "val_accuracy": 0.9733,
+   "val_loss": 0.1139,
+   "val_precision": 0.9494,
+   "val_recall": 1.0,
+   "learning_rate": 5e-05
+  },
+  {
+   "epoca": 9,
+   "accuracy": 0.9973,
+   "loss": 0.0108,
+   "precision": 0.9947,
+   "recall": 1.0,
+   "val_accuracy": 0.9867,
+   "val_loss": 0.0322,
+   "val_precision": 0.9867,
+   "val_recall": 0.9867,
+   "learning_rate": 5e-05
+  },
+  {
+   "epoca": 10,
+   "accuracy": 1.0,
+   "loss": 0.0029,
+   "precision": 1.0,
+   "recall": 1.0,
+   "val_accuracy": 0.9867,
+   "val_loss": 0.0322,
+   "val_precision": 0.9803,
+   "val_recall": 0.9933,
+   "learning_rate": 5e-05
+  },
+  {
+   "epoca": 11,
+   "accuracy": 0.9967,
+   "loss": 0.0096,
+   "precision": 0.996,
+   "recall": 0.9973,
+   "val_accuracy": 0.9767,
+   "val_loss": 0.1118,
+   "val_precision": 0.9735,
+   "val_recall": 0.98,
+   "learning_rate": 5e-05
+  },
+  {
+   "epoca": 12,
+   "accuracy": 0.9973,
+   "loss": 0.0119,
+   "precision": 0.9987,
+   "recall": 0.996,
+   "val_accuracy": 0.96,
+   "val_loss": 0.1982,
+   "val_precision": 0.9259,
+   "val_recall": 1.0,
+   "learning_rate": 5e-05
+  },
+  {
+   "epoca": 13,
+   "accuracy": 0.996,
+   "loss": 0.0096,
+   "precision": 0.9934,
+   "recall": 0.9987,
+   "val_accuracy": 0.9867,
+   "val_loss": 0.0291,
+   "val_precision": 0.9803,
+   "val_recall": 0.9933,
+   "learning_rate": 2.5e-05
+  },
+  {
+   "epoca": 14,
+   "accuracy": 1.0,
+   "loss": 0.0019,
+   "precision": 1.0,
+   "recall": 1.0,
+   "val_accuracy": 0.9867,
+   "val_loss": 0.0348,
+   "val_precision": 0.974,
+   "val_recall": 1.0,
+   "learning_rate": 2.5e-05
+  },
+  {
+   "epoca": 15,
+   "accuracy": 1.0,
+   "loss": 0.0015,
+   "precision": 1.0,
+   "recall": 1.0,
+   "val_accuracy": 0.9867,
+   "val_loss": 0.0298,
+   "val_precision": 0.974,
+   "val_recall": 1.0,
+   "learning_rate": 2.5e-05
+  },
+  {
+   "epoca": 16,
+   "accuracy": 0.9993,
+   "loss": 0.0021,
+   "precision": 0.9987,
+   "recall": 1.0,
+   "val_accuracy": 0.9833,
+   "val_loss": 0.0304,
+   "val_precision": 0.9739,
+   "val_recall": 0.9933,
+   "learning_rate": 2.5e-05
+  },
+  {
+   "epoca": 17,
+   "accuracy": 0.9993,
+   "loss": 0.0021,
+   "precision": 0.9987,
+   "recall": 1.0,
+   "val_accuracy": 0.9867,
+   "val_loss": 0.0495,
+   "val_precision": 0.974,
+   "val_recall": 1.0,
+   "learning_rate": 1.25e-05
+  },
+  {
+   "epoca": 18,
+   "accuracy": 1.0,
+   "loss": 0.00085193,
+   "precision": 1.0,
+   "recall": 1.0,
+   "val_accuracy": 0.9867,
+   "val_loss": 0.0458,
+   "val_precision": 0.974,
+   "val_recall": 1.0,
+   "learning_rate": 1.25e-05
+  },
+  {
+   "epoca": 19,
+   "accuracy": 0.9987,
+   "loss": 0.0025,
+   "precision": 0.9987,
+   "recall": 0.9987,
+   "val_accuracy": 0.9833,
+   "val_loss": 0.0657,
+   "val_precision": 0.9677,
+   "val_recall": 1.0,
+   "learning_rate": 1.25e-05
+  },
+  {
+   "epoca": 20,
+   "accuracy": 0.9993,
+   "loss": 0.0011,
+   "precision": 1.0,
+   "recall": 0.9987,
+   "val_accuracy": 0.9833,
+   "val_loss": 0.0674,
+   "val_precision": 0.9677,
+   "val_recall": 1.0,
+   "learning_rate": 6.25e-06
+  }
+ ],
+ "mejor_epoca": 13,
+ "epocas_entrenadas": 20
+}

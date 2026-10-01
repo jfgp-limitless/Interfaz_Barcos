@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Detección de barcos · Proyecto 2 IA</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230071e3'/%3E%3Cpath d='M7 19h18l-3 5H10z' fill='white'/%3E%3Cpath d='M15 8v10h-6z' fill='white' opacity='.8'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/static/css/estilos.css">
+</head>
+<body>
+
+<header class="barra">
+  <div class="barra-in">
+    <div class="marca">
+      <span class="marca-logo" aria-hidden="true">
+        <svg viewBox="0 0 32 32"><rect width="32" height="32" rx="8"/><path d="M7 19h18l-3 5H10z"/><path d="M15 8v10h-6z" opacity=".8"/></svg>
+      </span>
+      <span class="marca-texto">
+        <strong>Detección de barcos</strong>
+        <small>Proyecto 2 · Inteligencia Artificial</small>
+      </span>
+    </div>
+    <nav class="pestanas" role="tablist" aria-label="Secciones">
+      <button role="tab" class="pestana activa" data-vista="evaluacion" aria-selected="true">Evaluación en vivo</button>
+      <button role="tab" class="pestana" data-vista="modelo" aria-selected="false">Modelo</button>
+      <button role="tab" class="pestana" data-vista="comparacion" aria-selected="false">Comparación</button>
+    </nav>
+    <div class="estado" id="estado" aria-live="polite">
+      <span class="punto"></span><span class="estado-texto">Cargando modelos</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ===================================================== EVALUACIÓN -->
+  <section class="vista activa" id="vista-evaluacion" role="tabpanel">
+
+    <div class="portada">
+      <p class="sobretitulo">Universidad Militar Nueva Granada · Ingeniería Mecatrónica</p>
+      <h1>Detección de barcos en imágenes satelitales</h1>
+      <p class="lead">Clasificador binario barco / no barco pensado para el sistema de percepción de un dron de inspección portuaria. Carga la carpeta de prueba y obtén las métricas en vivo.</p>
+      <div class="autor">
+        <span class="autor-avatar" aria-hidden="true">JF</span>
+        <div>
+          <strong id="autor-nombre">Juan Felipe Gonzalez Pardo</strong>
+          <span id="autor-detalle">Código 7004086 · Ingeniería Mecatrónica</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tarjeta configurar" id="panel-configurar">
+      <div class="paso">
+        <div class="paso-cab"><span class="paso-num">1</span><h2>Elige el modelo</h2></div>
+        <div class="segmentado grande" id="selector-modelo" role="radiogroup" aria-label="Modelo a evaluar"></div>
+        <p class="ayuda" id="ayuda-modelo"></p>
+      </div>
+
+      <div class="paso">
+        <div class="paso-cab"><span class="paso-num">2</span><h2>Carga la carpeta de prueba</h2></div>
+        <div class="zona" id="zona">
+          <svg class="zona-icono" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 14a4 4 0 0 1 4-4h9l4 4h15a4 4 0 0 1 4 4v18a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M24 22v10M19 27l5-5 5 5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <p class="zona-titulo">Arrastra aquí la carpeta</p>
+          <p class="zona-sub">o</p>
+          <button class="boton primario" id="btn-carpeta" type="button">Seleccionar carpeta</button>
+          <input type="file" id="input-carpeta" webkitdirectory directory multiple hidden>
+        </div>
+        <div class="separador"><span>o usa una ruta de este equipo</span></div>
+        <div class="fila-ruta">
+          <input type="text" id="input-ruta" class="campo" placeholder="Ej. D:\Felipe\Desktop\IA\Proyecto_IA\DataSetv2" spellcheck="false">
+          <button class="boton" id="btn-explorar" type="button">Explorar</button>
+          <button class="boton primario" id="btn-ruta" type="button">Evaluar</button>
+        </div>
+        <p class="ayuda">La etiqueta real se toma de las subcarpetas <code>Barcos</code> / <code>No_Barcos</code> (también <code>barco</code> / <code>no_barco</code>) o del prefijo del archivo <code>1__</code> / <code>0__</code>. Si no hay etiqueta, puedes asignarla después en la galería.</p>
+        <p class="aviso" id="aviso-carga" hidden></p>
+      </div>
+    </div>
+
+    <div class="tarjeta progreso" id="panel-progreso" hidden>
+      <div class="progreso-cab">
+        <strong id="progreso-titulo">Evaluando</strong>
+        <span id="progreso-texto">0 / 0</span>
+      </div>
+      <div class="barra-progreso"><span id="progreso-relleno"></span></div>
+    </div>
+
+    <div id="resultados" hidden>
+      <div class="resultados-cab">
+        <div>
+          <p class="sobretitulo" id="res-carpeta">Carpeta</p>
+          <h2 class="titulo-seccion">Resultados de la evaluación</h2>
+        </div>
+        <div class="acciones">
+          <div class="segmentado" id="res-selector" role="radiogroup" aria-label="Modelo mostrado" hidden></div>
+          <button class="boton" id="btn-csv" type="button">Exportar CSV</button>
+          <button class="boton" id="btn-nueva" type="button">Nueva evaluación</button>
+        </div>
+      </div>
+
+      <div class="rejilla-hero">
+        <div class="tarjeta hero" id="res-hero"></div>
+        <div class="kpis" id="res-kpis"></div>
+      </div>
+
+      <div class="rejilla-3">
+        <div class="tarjeta">
+          <h3>Matriz de confusión</h3>
+          <p class="nota">Filas: clase real. Columnas: predicción.</p>
+          <div id="res-matriz"></div>
+        </div>
+        <div class="tarjeta">
+          <h3>Curva ROC</h3>
+          <p class="nota" id="res-auc-nota">Sensibilidad frente a tasa de falsos positivos.</p>
+          <div id="res-roc" class="grafica"></div>
+        </div>
+        <div class="tarjeta">
+          <h3>Distribución de probabilidades</h3>
+          <p class="nota">P(barco) por clase real. La línea marca el umbral.</p>
+          <div id="res-hist" class="grafica"></div>
+          <div class="umbral">
+            <label for="umbral">Umbral de decisión</label>
+            <input type="range" id="umbral" min="0.05" max="0.95" step="0.01" value="0.5">
+            <output id="umbral-valor">0.50</output>
+            <button class="enlace" id="umbral-reset" type="button">Restablecer</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tarjeta">
+        <div class="galeria-cab">
+          <div>
+            <h3>Imágenes evaluadas</h3>
+            <p class="nota" id="galeria-resumen"></p>
+          </div>
+          <div class="acciones">
+            <div class="segmentado pequeno" id="filtro-galeria" role="radiogroup" aria-label="Filtro"></div>
+            <select id="orden-galeria" class="campo pequeno" aria-label="Orden">
+              <option value="nombre">Por nombre</option>
+              <option value="duda">Menos seguras primero</option>
+              <option value="prob-desc">P(barco) descendente</option>
+              <option value="prob-asc">P(barco) ascendente</option>
+            </select>
+          </div>
+        </div>
+        <div class="etiquetado" id="etiquetado-masivo" hidden>
+          <span id="etiquetado-texto"></span>
+          <button class="boton pequeno" data-masivo="1" type="button">Marcar todas como barco</button>
+          <button class="boton pequeno" data-masivo="0" type="button">Marcar todas como no barco</button>
+          <button class="boton pequeno" data-masivo="pred" type="button">Usar la predicción</button>
+        </div>
+        <p class="nota">Haz clic en la etiqueta real de una imagen para cambiarla (Barco → No barco → Sin etiqueta). Las métricas se recalculan al instante.</p>
+        <div class="galeria" id="galeria"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== MODELO -->
+  <section class="vista" id="vista-modelo" role="tabpanel">
+    <div class="vista-cab">
+      <div>
+        <p class="sobretitulo">Ficha técnica</p>
+        <h1 class="titulo-vista">¿Cómo está construido el modelo?</h1>
+      </div>
+      <div class="segmentado grande" id="selector-ficha" role="radiogroup" aria-label="Modelo"></div>
+    </div>
+    <div id="ficha"></div>
+  </section>
+
+  <!-- ===================================================== COMPARACIÓN -->
+  <section class="vista" id="vista-comparacion" role="tabpanel">
+    <div class="vista-cab">
+      <div>
+        <p class="sobretitulo">ResNet50 frente a CNN desde cero</p>
+        <h1 class="titulo-vista">Comparación de modelos</h1>
+      </div>
+    </div>
+    <div id="comparacion"></div>
+  </section>
+
+</main>
+
+<footer class="pie">
+  <div class="pie-in">
+    <div>
+      <strong id="pie-nombre">Juan Felipe Gonzalez Pardo</strong> · Código <span id="pie-codigo">7004086</span><br>
+      <span id="pie-programa">Ingeniería Mecatrónica · Universidad Militar Nueva Granada</span>
+    </div>
+    <div class="pie-der">
+      Proyecto 2 · Inteligencia Artificial · 2026-2<br>
+      Dataset: Ships in Satellite Imagery (Kaggle)
+    </div>
+  </div>
+</footer>
+
+<div class="tooltip" id="tooltip" role="tooltip" hidden></div>
+
+<script src="/static/js/graficas.js"></script>
+<script src="/static/js/arquitectura.js"></script>
+<script src="/static/js/app.js"></script>
+</body>
+</html>
