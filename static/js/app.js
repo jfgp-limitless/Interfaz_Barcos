@@ -16,7 +16,7 @@
   const S = {
     catalogo: null, info: {}, estado: null,
     seleccion: "resnet50", ficha: "resnet50",
-    eval: null, vistaRes: null,
+    eval: null, vistaRes: null, manual: false, etq: null,
     umbral: 0.5, filtro: "todas", orden: "nombre", limite: 120,
   };
 
@@ -99,6 +99,9 @@
     if (!S.estado.listo) sondearEstado();
     configurarPestanas();
     configurarCarga();
+    configurarEtiquetado();
+    segmentado($("#selector-modo"), [{ id: "directo", texto: "Evaluar al cargar" }, { id: "manual", texto: "Etiquetar yo primero" }], "directo", (id) => { S.manual = id === "manual"; ayudaModo(); });
+    ayudaModo();
     segmentado($("#selector-modelo"), opcionesModelo(true), S.seleccion, (id) => { S.seleccion = id; ayudaModelo(); });
     ayudaModelo();
     segmentado($("#selector-ficha"), opcionesModelo(false), S.ficha, (id) => { S.ficha = id; pintarFicha(); });
@@ -121,6 +124,7 @@
       ? "Se evalúan los dos modelos sobre las mismas imágenes; la pestaña Comparación mostrará el resultado lado a lado."
       : modelo(S.seleccion).descripcion;
     $("#ayuda-modelo").textContent = t;
+    if (S.etq) pintarEtq();
   }
 
   function pintarIdentidad() {
@@ -243,10 +247,11 @@
     S.eval.nInferidas += resp.n_validas;
   }
 
-  async function evaluarArchivos(lista) {
+  async function evaluarArchivos(lista, reales) {
     avisar("");
     if (!lista.length) { avisar("La carpeta no contiene imágenes compatibles (png, jpg, bmp, tif, webp)."); return; }
-    lista.sort((a, b) => a.ruta.localeCompare(b.ruta, "es", { numeric: true }));
+    if (!reales) lista.sort((a, b) => a.ruta.localeCompare(b.ruta, "es", { numeric: true }));
+    if (S.manual && !reales) { prepararEtiquetado(lista[0].ruta.includes("/") ? lista[0].ruta.split("/")[0] : "Archivos seleccionados", lista.map((x) => ({ ruta: x.ruta, nombre: x.ruta.split("/").pop(), url: URL.createObjectURL(x.file) })), { tipo: "archivos", lista }); return; }
     const ids = idsSeleccion();
     const raiz = lista[0].ruta.includes("/") ? lista[0].ruta.split("/")[0] : "Archivos seleccionados";
     nuevaEvaluacion(raiz, ids);
@@ -263,9 +268,12 @@
         agregarRespuesta(await r.json(), lote.map((x) => ({ url: URL.createObjectURL(x.file) })));
       }
       progreso("Evaluación terminada", lista.length, lista.length);
+      aplicarReales(reales);
       mostrarResultados();
+      return true;
     } catch (e) {
       avisar("Error durante la evaluación: " + e.message);
+      return false;
     } finally { bloquear(false); setTimeout(() => ($("#panel-progreso").hidden = true), 700); }
   }
 
@@ -278,6 +286,19 @@
       const r = await fetch("/api/carpeta", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ruta }) });
       const d = await r.json();
       if (!r.ok) { avisar(d.error || "No se pudo abrir la carpeta."); return; }
+      if (S.manual) {
+        prepararEtiquetado(d.nombre, d.archivos.map((a, k) => ({ ruta: a, nombre: a.split("/").pop(), url: `/api/miniatura/${d.token}/${k}` })), { tipo: "ruta", d });
+        return;
+      }
+      await ejecutarRuta(d, null);
+    } catch (e) {
+      avisar("Error durante la evaluación: " + e.message);
+    } finally { bloquear(false); }
+  }
+
+  async function ejecutarRuta(d, reales) {
+    bloquear(true);
+    try {
       const ids = idsSeleccion();
       nuevaEvaluacion(d.nombre, ids);
       for (let i = 0; i < d.total; i += LOTE) {
@@ -290,10 +311,126 @@
         agregarRespuesta(await rr.json());
       }
       progreso("Evaluación terminada", d.total, d.total);
+      aplicarReales(reales);
       mostrarResultados();
+      return true;
     } catch (e) {
       avisar("Error durante la evaluación: " + e.message);
+      return false;
     } finally { bloquear(false); setTimeout(() => ($("#panel-progreso").hidden = true), 700); }
+  }
+
+  /* ------------------------------------------------------------ etiquetado manual previo */
+  function ayudaModo() {
+    $("#ayuda-modo").textContent = S.manual
+      ? "Cargas la carpeta, clasificas cada imagen tú mismo (barco o no barco) y solo entonces se ejecuta el modelo. Útil si la carpeta viene mezclada y sin etiquetas."
+      : "El modelo clasifica las imágenes al cargarlas. La etiqueta real se deduce de la carpeta o del nombre del archivo, y se puede corregir después.";
+    $("#btn-ruta").textContent = S.manual ? "Cargar" : "Evaluar";
+  }
+
+  function aplicarReales(reales) {
+    if (!reales) return;
+    S.eval.items.forEach((it, k) => { it.real = reales[k] == null ? null : reales[k]; it.etiquetaOriginal = it.real; });
+  }
+
+  function liberarEtq() {
+    if (S.etq && S.etq.fuente.tipo === "archivos") S.etq.items.forEach((i) => URL.revokeObjectURL(i.url));
+    S.etq = null;
+  }
+
+  function prepararEtiquetado(carpeta, items, fuente) {
+    liberarEtq();
+    items.forEach((i) => { i.real = null; });
+    S.etq = { carpeta, items, fuente, actual: 0 };
+    $("#resultados").hidden = true;
+    $("#panel-etiquetar").hidden = false;
+    $("#etq-carpeta").textContent = `${carpeta} · ${miles(items.length)} imágenes`;
+    $("#etq-rejilla").innerHTML = items.map((it, k) => `<button type="button" class="etq-celda" data-k="${k}" title="${esc(it.nombre)}"><img src="${esc(it.url)}" alt="" loading="lazy"></button>`).join("");
+    pintarEtq();
+    setTimeout(() => $("#panel-etiquetar").scrollIntoView({ behavior: "smooth", block: "start" }), 60);
+  }
+
+  function pintarEtq() {
+    const E = S.etq; if (!E) return;
+    const it = E.items[E.actual];
+    $("#etq-img").src = it.url;
+    $("#etq-pos").textContent = `Imagen ${miles(E.actual + 1)} de ${miles(E.items.length)}`;
+    $("#etq-nombre").textContent = it.nombre;
+    $("#etq-marco").dataset.real = it.real == null ? "" : it.real;
+    $("#etq-si").classList.toggle("marcada", it.real === 1);
+    $("#etq-no").classList.toggle("marcada", it.real === 0);
+    $("#etq-ant").disabled = E.actual === 0;
+    $("#etq-sig").disabled = E.actual === E.items.length - 1;
+    $$("#etq-rejilla .etq-celda").forEach((c, k) => {
+      const r = E.items[k].real;
+      c.classList.toggle("si", r === 1); c.classList.toggle("no", r === 0); c.classList.toggle("actual", k === E.actual);
+    });
+    const hechas = E.items.filter((i) => i.real != null).length;
+    $("#etq-conteo").textContent = `${miles(hechas)} / ${miles(E.items.length)} etiquetadas`;
+    $("#etq-relleno").style.width = (100 * hechas / E.items.length) + "%";
+    const faltan = E.items.length - hechas;
+    const b = $("#etq-evaluar");
+    b.textContent = faltan ? `Evaluar con ${idsSeleccion().map(nombreModelo).join(" y ")} (faltan ${miles(faltan)})` : `Evaluar con ${idsSeleccion().map(nombreModelo).join(" y ")}`;
+    b.disabled = hechas === 0;
+    const celda = $(`#etq-rejilla .etq-celda[data-k="${E.actual}"]`);
+    if (celda) celda.scrollIntoView({ block: "nearest" });
+  }
+
+  function etiquetar(valor) {
+    const E = S.etq; if (!E) return;
+    E.items[E.actual].real = valor;
+    if (valor != null && E.actual < E.items.length - 1) E.actual++;
+    pintarEtq();
+  }
+
+  function mover(d) {
+    const E = S.etq; if (!E) return;
+    E.actual = Math.max(0, Math.min(E.items.length - 1, E.actual + d));
+    pintarEtq();
+  }
+
+  function siguientePendiente() {
+    const E = S.etq; if (!E) return;
+    const n = E.items.length;
+    for (let d = 1; d <= n; d++) {
+      const k = (E.actual + d) % n;
+      if (E.items[k].real == null) { E.actual = k; break; }
+    }
+    pintarEtq();
+  }
+
+  function configurarEtiquetado() {
+    $("#etq-si").addEventListener("click", () => etiquetar(1));
+    $("#etq-no").addEventListener("click", () => etiquetar(0));
+    $("#etq-ant").addEventListener("click", () => mover(-1));
+    $("#etq-sig").addEventListener("click", () => mover(1));
+    $("#etq-quitar").addEventListener("click", () => etiquetar(null));
+    $("#etq-pendiente").addEventListener("click", siguientePendiente);
+    $("#etq-rejilla").addEventListener("click", (e) => {
+      const c = e.target.closest("[data-k]"); if (!c) return;
+      S.etq.actual = +c.dataset.k; pintarEtq();
+    });
+    $("#etq-cancelar").addEventListener("click", () => { $("#panel-etiquetar").hidden = true; liberarEtq(); $("#panel-configurar").scrollIntoView({ behavior: "smooth" }); });
+    $("#etq-evaluar").addEventListener("click", async () => {
+      const E = S.etq; if (!E) return;
+      const reales = E.items.map((i) => i.real);
+      const fuente = E.fuente;
+      $("#panel-etiquetar").hidden = true;
+      const ok = fuente.tipo === "archivos" ? await evaluarArchivos(fuente.lista, reales) : await ejecutarRuta(fuente.d, reales);
+      if (ok) liberarEtq(); else $("#panel-etiquetar").hidden = false;
+    });
+    document.addEventListener("keydown", (e) => {
+      if (!S.etq || $("#panel-etiquetar").hidden) return;
+      if (e.target.matches("input, textarea, select") || e.ctrlKey || e.metaKey || e.altKey) return;
+      const k = e.key.toLowerCase();
+      if (k === "b") etiquetar(1);
+      else if (k === "n") etiquetar(0);
+      else if (k === "arrowright") mover(1);
+      else if (k === "arrowleft") mover(-1);
+      else if (k === "delete" || k === "backspace") etiquetar(null);
+      else return;
+      e.preventDefault();
+    });
   }
 
   function bloquear(si) { ["#btn-carpeta", "#btn-ruta", "#btn-explorar"].forEach((s) => ($(s).disabled = si)); }

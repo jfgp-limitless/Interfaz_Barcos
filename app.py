@@ -115,7 +115,10 @@ def abrir_carpeta():
         return jsonify({"error": "No se encontraron imágenes en esa carpeta."}), 400
     token = uuid.uuid4().hex
     _carpetas[token] = {"raiz": ruta, "archivos": archivos}
-    return jsonify({"token": token, "total": len(archivos), "nombre": os.path.basename(os.path.normpath(ruta))})
+    return jsonify({
+        "token": token, "total": len(archivos), "nombre": os.path.basename(os.path.normpath(ruta)),
+        "archivos": [a.replace("\\", "/") for a in archivos],
+    })
 
 
 @app.route("/api/evaluar_carpeta", methods=["POST"])

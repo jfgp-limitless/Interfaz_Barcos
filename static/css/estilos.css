@@ -392,3 +392,39 @@ details.salida summary small { color: var(--texto-3); font-weight: 400; margin-l
   .pie-der { text-align: left; }
   .marca-texto small { display: none; }
 }
+
+/* ---------------------------------------------------------------- etiquetado manual previo */
+.modo { margin-bottom: 16px; }
+.modo .ayuda { margin-top: 10px; }
+.etiquetar { padding: 28px; }
+.etq-cab { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+.etq-cab .nota { margin: 6px 0 0; }
+.etq-cuerpo { display: grid; grid-template-columns: minmax(300px, 380px) 1fr; gap: 28px; align-items: start; }
+.etq-visor { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.etq-marco { background: var(--superficie-2); border: 3px solid var(--linea); border-radius: 16px; padding: 10px; transition: border-color .15s; }
+.etq-marco[data-real="1"] { border-color: var(--serie-1); }
+.etq-marco[data-real="0"] { border-color: var(--serie-2); }
+.etq-marco img { display: block; width: 100%; aspect-ratio: 1; object-fit: contain; image-rendering: pixelated; background: #e5e5ea; border-radius: 8px; }
+.etq-info { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--texto-2); }
+.etq-info span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.etq-botones { display: grid; grid-template-columns: 1fr 1.4fr 1.4fr 1fr; gap: 8px; }
+.etq-botones .boton { padding: 12px 8px; font-size: 14px; display: inline-flex; flex-direction: column; align-items: center; gap: 2px; }
+.etq-botones kbd { font-family: var(--mono); font-size: 11px; font-weight: 500; color: var(--texto-2); }
+.etq-si.marcada, .etq-si:hover { background: var(--serie-1-suave); color: var(--serie-1); box-shadow: inset 0 0 0 2px var(--serie-1); }
+.etq-no.marcada, .etq-no:hover { background: var(--serie-2-suave); color: #b9501f; box-shadow: inset 0 0 0 2px var(--serie-2); }
+.etq-extra { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.etq-visor .ayuda { margin-top: 0; }
+.etq-lado { min-width: 0; }
+.etq-lado .progreso-cab { margin-bottom: 10px; }
+.etq-leyenda { display: flex; gap: 16px; font-size: 12px; color: var(--texto-2); margin: 12px 0 10px; flex-wrap: wrap; }
+.etq-leyenda span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.l-si::before { background: var(--serie-1); }
+.l-no::before { background: var(--serie-2); }
+.l-vacio::before { background: var(--linea-fuerte); }
+.etq-rejilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 8px; max-height: 520px; overflow-y: auto; padding: 4px; margin: -4px; }
+.etq-celda { border: 3px solid var(--linea-fuerte); background: none; padding: 0; border-radius: 10px; overflow: hidden; cursor: pointer; aspect-ratio: 1; line-height: 0; }
+.etq-celda img { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; }
+.etq-celda.si { border-color: var(--serie-1); }
+.etq-celda.no { border-color: var(--serie-2); }
+.etq-celda.actual { outline: 3px solid var(--acento); outline-offset: 2px; }
+@media (max-width: 860px) { .etq-cuerpo { grid-template-columns: 1fr; } .etiquetar { padding: 20px; } .etq-rejilla { max-height: 320px; } }

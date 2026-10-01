@@ -58,6 +58,10 @@
 
       <div class="paso">
         <div class="paso-cab"><span class="paso-num">2</span><h2>Carga la carpeta de prueba</h2></div>
+        <div class="modo">
+          <div class="segmentado" id="selector-modo" role="radiogroup" aria-label="Modo de carga"></div>
+          <p class="ayuda" id="ayuda-modo"></p>
+        </div>
         <div class="zona" id="zona">
           <svg class="zona-icono" viewBox="0 0 48 48" aria-hidden="true"><path d="M6 14a4 4 0 0 1 4-4h9l4 4h15a4 4 0 0 1 4 4v18a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M24 22v10M19 27l5-5 5 5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <p class="zona-titulo">Arrastra aquí la carpeta</p>
@@ -82,6 +86,44 @@
         <span id="progreso-texto">0 / 0</span>
       </div>
       <div class="barra-progreso"><span id="progreso-relleno"></span></div>
+    </div>
+
+    <div class="tarjeta etiquetar" id="panel-etiquetar" hidden>
+      <div class="etq-cab">
+        <div>
+          <p class="sobretitulo" id="etq-carpeta">Carpeta</p>
+          <h2 class="titulo-seccion">Etiquetado manual</h2>
+          <p class="nota">Clasifica cada imagen tú mismo. El modelo no se ejecuta hasta que pulses Evaluar.</p>
+        </div>
+        <div class="acciones">
+          <button class="boton" id="etq-cancelar" type="button">Cancelar</button>
+          <button class="boton primario" id="etq-evaluar" type="button">Evaluar con el modelo</button>
+        </div>
+      </div>
+
+      <div class="etq-cuerpo">
+        <div class="etq-visor">
+          <div class="etq-marco" id="etq-marco"><img id="etq-img" alt="Imagen a etiquetar"></div>
+          <div class="etq-info"><span id="etq-pos"></span><span id="etq-nombre"></span></div>
+          <div class="etq-botones">
+            <button class="boton" id="etq-ant" type="button">Anterior</button>
+            <button class="boton etq-no" id="etq-no" type="button">No barco <kbd>N</kbd></button>
+            <button class="boton etq-si" id="etq-si" type="button">Barco <kbd>B</kbd></button>
+            <button class="boton" id="etq-sig" type="button">Siguiente</button>
+          </div>
+          <div class="etq-extra">
+            <button class="enlace" id="etq-quitar" type="button">Quitar etiqueta</button>
+            <button class="enlace" id="etq-pendiente" type="button">Ir a la siguiente sin etiquetar</button>
+          </div>
+          <p class="ayuda">Atajos: <code>B</code> barco, <code>N</code> no barco, flechas para moverte, <code>Supr</code> quita la etiqueta.</p>
+        </div>
+        <div class="etq-lado">
+          <div class="progreso-cab"><strong>Progreso</strong><span id="etq-conteo"></span></div>
+          <div class="barra-progreso"><span id="etq-relleno"></span></div>
+          <div class="etq-leyenda"><span class="l-si">Barco</span><span class="l-no">No barco</span><span class="l-vacio">Sin etiqueta</span></div>
+          <div class="etq-rejilla" id="etq-rejilla"></div>
+        </div>
+      </div>
     </div>
 
     <div id="resultados" hidden>

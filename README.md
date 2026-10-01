@@ -31,6 +31,10 @@ En la galería se ve cada imagen con su predicción y su probabilidad. Se puede 
 
 **Comparación.** Métricas lado a lado de los dos modelos. Si se evaluó con *Ambos*, incluye la comparación en vivo. Muestra además tamaño, parámetros, velocidad y curvas de validación superpuestas.
 
+## Etiquetar a mano antes de evaluar
+
+Si la carpeta de prueba llega mezclada y sin etiquetas, en el paso 2 se elige **Etiquetar yo primero**. La carpeta se carga sin ejecutar el modelo y se abre el panel de etiquetado manual: cada imagen se ve ampliada y se clasifica con los botones o con el teclado (`B` barco, `N` no barco, flechas para moverse, `Supr` para quitar la etiqueta). Al terminar, **Evaluar con el modelo** corre la inferencia y calcula las métricas con las etiquetas puestas a mano.
+
 ## Cómo se etiquetan las imágenes de prueba
 
 La etiqueta real se deduce de la ruta de cada imagen:
